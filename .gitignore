@@ -6,4 +6,6 @@ obj/
 TestResults/
 artifacts/
 publish/
+dist/
+installer-work/
 *.zip
