@@ -1,13 +1,13 @@
-# AI-assisted source install
+# AI-assisted source installation
 
-SignalWall is free, open source, and early. The public Windows installer is currently **unsigned**, so the safest installation path is to let a local coding agent inspect the repository, build from source, and explain the security findings before anything runs.
+SignalWall is free, open source, and early. The public Windows installer is currently **unsigned**, so the safest path is to have a local coding agent inspect the repository, build from source, and explain the security findings before anything runs.
 
 Repository: `https://github.com/Sabertlili/signalwall`
 
 ## Copy this prompt
 
 ```text
-You are my local coding agent on Windows. I want to install SignalWall from its open-source repository, but only after you verify the source and build path.
+You are my local coding agent on Windows. I want to install SignalWall from its open-source repository, but only after you review the source code and verify the build process.
 
 Repository: https://github.com/Sabertlili/signalwall
 
@@ -36,7 +36,7 @@ Verification checklist:
 Final output expected:
 - A short security report.
 - The exact commands you ran.
-- Whether you recommend running from source, building a local installer, or waiting for a signed release.
+- A clear recommendation: run from source, build a local installer, or wait for a signed release.
 ```
 
 ## What the agent should verify
@@ -45,7 +45,7 @@ Final output expected:
 - **Source review**: app code, bundled wallpaper HTML, scripts, and workflows should be inspected before execution.
 - **Dependencies**: SignalWall uses .NET 8 and WebView2. The agent should report restore/build warnings.
 - **Installer status**: public alpha installers are unsigned unless a future release states otherwise.
-- **Windows security**: the correct response to Smart App Control is not to bypass Windows blindly; it is to inspect and build from source, or wait for a signed release.
+- **Windows security**: the correct response to Smart App Control is not to bypass Windows blindly. Inspect and build from source, or wait for a signed release.
 
 ## Product captures
 

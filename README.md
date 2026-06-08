@@ -1,14 +1,14 @@
 # SignalWall
 
-Francais: [README.fr.md](README.fr.md)
+Français: [README.fr.md](README.fr.md)
 
-SignalWall is a small open-source Windows live wallpaper host built from scratch for Quote Signal.
+SignalWall is a small open-source Windows live wallpaper app built from scratch for Quote Signal.
 
 It creates one borderless WebView2 wallpaper window per monitor, attaches those windows behind the desktop icons, and loads the bundled Quote Signal HTML wallpaper.
 
 ## Install safely with Codex or Claude Code
 
-SignalWall is free and open source. The current public installer is an unsigned alpha, so the recommended path is to ask Codex, Claude Code, or another local coding agent to inspect the source, build it locally, and report security findings before launching it.
+SignalWall is free and open source. The current public installer is an unsigned alpha, so the recommended path is to ask Codex, Claude Code, or another local coding agent to inspect the source, build locally, and report security findings before launching the app.
 
 Copy the ready-to-use prompt here:
 

@@ -2,67 +2,67 @@
 
 English: [README.md](README.md)
 
-SignalWall est un petit host de fonds d'ecran dynamiques Windows, open source, construit de zero pour Quote Signal.
+SignalWall est une petite application open source de fonds d’écran dynamiques Windows, construite de zéro pour Quote Signal.
 
-Il cree une fenetre WebView2 sans bordure par ecran, place ces fenetres derriere les icones du bureau, puis charge le fond d'ecran HTML Quote Signal inclus.
+Elle crée une fenêtre WebView2 sans bordure par écran, place ces fenêtres derrière les icônes du bureau, puis charge le fond d’écran HTML Quote Signal inclus.
 
 ## Installation prudente avec Codex ou Claude Code
 
-Le projet est gratuit et open source. L'installateur public actuel est une alpha non signee, donc le chemin recommande est de demander a Codex, Claude Code ou un agent equivalent d'inspecter le code source, compiler localement, puis presenter un rapport de securite avant de lancer l'app.
+Le projet est gratuit et open source. L’installateur public actuel est une alpha non signée. Le chemin recommandé est donc de demander à Codex, Claude Code ou un agent équivalent d’inspecter le code source, de compiler localement, puis de présenter un rapport de sécurité avant de lancer l’application.
 
-Prompt pret a copier:
+Prompt prêt à copier :
 
-**[Prompt d'installation source assistee par IA](docs/ai-assisted-install.fr.md)**
+**[Prompt d’installation depuis la source, assistée par IA](docs/ai-assisted-install.fr.md)**
 
-Ce prompt demande a l'agent de:
+Ce prompt demande à l’agent de :
 
 - cloner uniquement `https://github.com/Sabertlili/signalwall`;
-- inspecter le code de l'app, le fond d'ecran HTML inclus, les scripts et les GitHub Actions;
-- verifier les binaires de release avec `Get-AuthenticodeSignature` et `Get-FileHash` si necessaire;
+- inspecter le code de l’application, le fond d’écran HTML inclus, les scripts et les GitHub Actions;
+- vérifier les binaires de version publiée avec `Get-AuthenticodeSignature` et `Get-FileHash` si nécessaire;
 - compiler depuis la source avec `dotnet restore` et `dotnet build`;
-- ne pas desactiver Microsoft Defender, Smart App Control ou la securite navigateur;
-- expliquer ses conclusions avant de lancer l'app ou de construire un installateur local.
+- ne pas désactiver Microsoft Defender, Smart App Control ou la sécurité du navigateur;
+- expliquer ses conclusions avant de lancer l’application ou de construire un installateur local.
 
 ## Captures
 
-![Capture du fond d'ecran Quote Signal](docs/assets/quote-signal-capture.svg)
+![Capture du fond d’écran Quote Signal](docs/assets/quote-signal-capture.svg)
 
-![Workflow de personnalisation](docs/assets/customization-workflow.svg)
+![Flux de personnalisation](docs/assets/customization-workflow.svg)
 
-![Ordre des ecrans et modes](docs/assets/screen-layout-modes.svg)
+![Ordre des écrans et modes](docs/assets/screen-layout-modes.svg)
 
 ## Statut
 
-C'est un MVP encore jeune, pas encore un remplacement complet de Lively Wallpaper.
+C’est un MVP encore jeune, pas encore un remplacement complet de Lively Wallpaper.
 
-Fonctionnalites actuelles:
+Fonctionnalités actuelles :
 
-- Fenetre de fond d'ecran par moniteur.
+- Fenêtre de fond d’écran par moniteur.
 - Rendu HTML/CSS/JS via WebView2.
-- Quote Signal inclus comme fond d'ecran par defaut.
-- Injection de slot par ecran pour themes specifiques.
-- Meme citation sur tous les ecrans ou citation differente par ecran.
-- Themes texte globaux ou par ecran.
-- Themes couleur/background globaux ou par ecran.
-- Ordre physique des ecrans configurable.
-- Duree par citation, taille du texte, particules, opacite de grille, barre de progression, ordre aleatoire et transitions.
-- Menu tray avec reload, ouverture du dossier web et exit.
+- Quote Signal inclus comme fond d’écran par défaut.
+- Injection de slot par écran pour les thèmes spécifiques.
+- Même citation sur tous les écrans ou citation différente par écran.
+- Thèmes texte globaux ou par écran.
+- Thèmes couleur / arrière-plan globaux ou par écran.
+- Ordre physique des écrans configurable.
+- Durée par citation, taille du texte, particules, opacité de grille, barre de progression, ordre aléatoire et transitions.
+- Menu tray avec rechargement, ouverture du dossier web et fermeture.
 
-Fonctionnalites prevues:
+Fonctionnalités prévues :
 
-- Interface de parametres integree.
-- Installateur et option auto-start.
-- Pause lors des apps/jeux plein ecran.
-- Bibliotheque de fonds d'ecran.
-- Import/export de themes et packs de citations.
+- Interface de paramètres intégrée.
+- Installateur et option de démarrage automatique.
+- Pause lors des applications ou jeux en plein écran.
+- Bibliothèque de fonds d’écran.
+- Import/export de thèmes et de packs de citations.
 
-## Prerequis
+## Prérequis
 
 - Windows 10 ou Windows 11
-- SDK .NET 8 pour le developpement
+- SDK .NET 8 pour le développement
 - Microsoft Edge WebView2 Runtime
 
-La plupart des machines Windows 11 ont deja WebView2. Si l'app ne peut pas demarrer WebView2, installez l'Evergreen Runtime de Microsoft.
+La plupart des machines Windows 11 ont déjà WebView2. Si l’application ne peut pas démarrer WebView2, installez l’Evergreen Runtime de Microsoft.
 
 ## Build
 
@@ -77,7 +77,7 @@ dotnet build .\src\SignalWall\SignalWall.csproj -c Release
 dotnet run --project .\src\SignalWall\SignalWall.csproj -c Release
 ```
 
-Apres lancement, SignalWall apparait dans la zone de notification. Clic droit sur l'icone pour recharger les fonds d'ecran, ouvrir le dossier web inclus ou quitter.
+Après lancement, SignalWall apparaît dans la zone de notification. Clic droit sur l’icône pour recharger les fonds d’écran, ouvrir le dossier web inclus ou quitter.
 
 ## Publier
 
@@ -85,9 +85,9 @@ Apres lancement, SignalWall apparait dans la zone de notification. Clic droit su
 dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-contained false -o .\publish\win-x64
 ```
 
-## Signature de l'installateur
+## Signature de l’installateur
 
-Les installateurs publics non signes peuvent etre bloques par Windows Smart App Control. Voir [docs/code-signing.md](docs/code-signing.md) pour le workflow de signature et les secrets GitHub Actions.
+Les installateurs publics non signés peuvent être bloqués par Windows Smart App Control. Voir [docs/code-signing.md](docs/code-signing.md) pour le processus de signature et les secrets GitHub Actions.
 
 ## Licence
 
