@@ -53,6 +53,10 @@ After launch, SignalWall appears in the system tray. Right-click the tray icon t
 dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-contained false -o .\publish\win-x64
 ```
 
+## Installer signing
+
+Unsigned public installers can be blocked by Windows Smart App Control. See [docs/code-signing.md](docs/code-signing.md) for the signing workflow and GitHub Actions secrets.
+
 ## License
 
 MIT. SignalWall is a clean-room project and does not copy Lively Wallpaper source code.
