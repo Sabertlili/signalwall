@@ -1,7 +1,11 @@
 param(
     [string] $Configuration = "Release",
     [string] $Runtime = "win-x64",
-    [string] $Version = "0.1.0"
+    [string] $Version = "0.1.0",
+    [string] $SigningPfxPath = $env:SIGNALWALL_SIGNING_PFX_PATH,
+    [string] $SigningPfxBase64 = $env:SIGNALWALL_SIGNING_PFX_BASE64,
+    [string] $SigningPfxPassword = $env:SIGNALWALL_SIGNING_PFX_PASSWORD,
+    [string] $TimestampUrl = $(if ($env:SIGNALWALL_TIMESTAMP_URL) { $env:SIGNALWALL_TIMESTAMP_URL } else { "http://timestamp.digicert.com" })
 )
 
 $ErrorActionPreference = "Stop"
@@ -34,9 +38,135 @@ if (-not $iexpressCmd) {
     throw "iexpress.exe was not found. It is required to build the installer on Windows."
 }
 
+$script:SigningConfig = $null
+$script:SigningTempPfx = $null
+
+function Get-SignToolPath {
+    $signToolCmd = Get-Command signtool.exe -ErrorAction SilentlyContinue
+    if ($signToolCmd) {
+        return $signToolCmd.Source
+    }
+
+    $kitsRoot = Join-Path ${env:ProgramFiles(x86)} "Windows Kits\10\bin"
+    if (Test-Path $kitsRoot) {
+        $candidate = Get-ChildItem -Path $kitsRoot -Recurse -Filter signtool.exe -ErrorAction SilentlyContinue |
+            Where-Object { $_.FullName -match "\\x64\\signtool\.exe$" } |
+            Sort-Object FullName -Descending |
+            Select-Object -First 1
+
+        if ($candidate) {
+            return $candidate.FullName
+        }
+    }
+
+    throw "signtool.exe was not found. Install the Windows SDK or add signtool.exe to PATH."
+}
+
+function Initialize-CodeSigning {
+    if ([string]::IsNullOrWhiteSpace($SigningPfxPath) -and [string]::IsNullOrWhiteSpace($SigningPfxBase64)) {
+        Write-Host "Code signing skipped: no certificate was configured."
+        return
+    }
+
+    $resolvedPfxPath = $SigningPfxPath
+    if (-not [string]::IsNullOrWhiteSpace($SigningPfxBase64)) {
+        $tempRoot = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } else { [System.IO.Path]::GetTempPath() }
+        $resolvedPfxPath = Join-Path $tempRoot "signalwall-codesign-$([Guid]::NewGuid()).pfx"
+        [System.IO.File]::WriteAllBytes($resolvedPfxPath, [Convert]::FromBase64String($SigningPfxBase64))
+        $script:SigningTempPfx = $resolvedPfxPath
+    }
+
+    if (-not (Test-Path $resolvedPfxPath)) {
+        throw "Configured signing certificate was not found: $resolvedPfxPath"
+    }
+
+    $password = if ($null -eq $SigningPfxPassword) { "" } else { $SigningPfxPassword }
+    $cert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new(
+        $resolvedPfxPath,
+        $password,
+        [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable
+    )
+
+    $script:SigningConfig = [pscustomobject]@{
+        PfxPath = $resolvedPfxPath
+        Certificate = $cert
+        SignTool = Get-SignToolPath
+    }
+
+    Write-Host "Code signing enabled."
+}
+
+function Clear-SigningTemp {
+    if ($script:SigningTempPfx -and (Test-Path $script:SigningTempPfx)) {
+        Remove-Item -LiteralPath $script:SigningTempPfx -Force -ErrorAction SilentlyContinue
+    }
+}
+
+function Sign-AuthenticodeFile {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $Path
+    )
+
+    if (-not $script:SigningConfig) {
+        return
+    }
+
+    $signature = Get-AuthenticodeSignature -FilePath $Path
+    if ($signature.Status -eq "Valid") {
+        Write-Host "Already signed: $Path"
+        return
+    }
+
+    if ($signature.Status -ne "NotSigned") {
+        throw "Refusing to sign file with unexpected signature state '$($signature.Status)': $Path"
+    }
+
+    Write-Host "Signing: $Path"
+    $signArgs = @("sign", "/f", $script:SigningConfig.PfxPath, "/fd", "SHA256", "/tr", $TimestampUrl, "/td", "SHA256")
+    if (-not [string]::IsNullOrEmpty($SigningPfxPassword)) {
+        $signArgs += @("/p", $SigningPfxPassword)
+    }
+    $signArgs += $Path
+
+    & $script:SigningConfig.SignTool @signArgs | Out-Host
+    if ($LASTEXITCODE -ne 0) {
+        throw "signtool failed for: $Path"
+    }
+
+    $signed = Get-AuthenticodeSignature -FilePath $Path
+    if ($signed.Status -ne "Valid") {
+        throw "Signed file did not validate as trusted. Status: $($signed.Status). Path: $Path"
+    }
+}
+
+function Sign-PowerShellScript {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $Path
+    )
+
+    if (-not $script:SigningConfig) {
+        return
+    }
+
+    Write-Host "Signing PowerShell script: $Path"
+    $result = Set-AuthenticodeSignature -FilePath $Path -Certificate $script:SigningConfig.Certificate -TimestampServer $TimestampUrl
+    if ($result.Status -ne "Valid") {
+        throw "PowerShell script signature failed. Status: $($result.Status). Path: $Path"
+    }
+}
+
+trap {
+    Clear-SigningTemp
+    throw
+}
+
 Remove-Item -LiteralPath $publishDir -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -LiteralPath $installerWorkDir -Recurse -Force -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force -Path $publishDir, $distDir, $payloadRoot, $stageDir | Out-Null
+
+Initialize-CodeSigning
 
 & $dotnet publish $project `
     -c $Configuration `
@@ -73,6 +203,11 @@ Remove-Item -LiteralPath $startMenuDir -Recurse -Force -ErrorAction SilentlyCont
 Remove-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\SignalWall" -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -LiteralPath $installRoot -Recurse -Force -ErrorAction SilentlyContinue
 '@ | Set-Content -Path (Join-Path $payloadRoot "uninstall.ps1") -Encoding ASCII
+
+Get-ChildItem -Path $payloadRoot -Recurse -File -Include *.exe, *.dll |
+    ForEach-Object { Sign-AuthenticodeFile -Path $_.FullName }
+
+Sign-PowerShellScript -Path (Join-Path $payloadRoot "uninstall.ps1")
 
 Compress-Archive -Path (Join-Path $payloadRoot "*") -DestinationPath $payloadZip -Force
 
@@ -129,6 +264,8 @@ New-ItemProperty -Path `$uninstallKey -Name "NoRepair" -Value 1 -PropertyType DW
 Start-Process -FilePath `$exe
 "@ | Set-Content -Path (Join-Path $stageDir "install.ps1") -Encoding ASCII
 
+Sign-PowerShellScript -Path (Join-Path $stageDir "install.ps1")
+
 $targetName = $setupExe.Replace("\", "\\")
 $stageName = ($stageDir + "\").Replace("\", "\\")
 
@@ -181,5 +318,8 @@ SourceFiles0=$stageName
 if (-not (Test-Path $setupExe)) {
     throw "Installer was not created: $setupExe"
 }
+
+Sign-AuthenticodeFile -Path $setupExe
+Clear-SigningTemp
 
 Write-Host "Installer created at $setupExe"
