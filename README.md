@@ -1,6 +1,6 @@
 # SignalWall
 
-English below, francais plus bas.
+Francais: [README.fr.md](README.fr.md)
 
 SignalWall is a small open-source Windows live wallpaper host built from scratch for Quote Signal.
 
@@ -12,7 +12,7 @@ SignalWall is free and open source. The current public installer is an unsigned 
 
 Copy the ready-to-use prompt here:
 
-**[AI-assisted source install prompt](docs/ai-assisted-install.md)**
+**[AI-assisted source install prompt](docs/ai-assisted-install.en.md)**
 
 That prompt tells the agent to:
 
@@ -88,38 +88,6 @@ dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-c
 ## Installer signing
 
 Unsigned public installers can be blocked by Windows Smart App Control. See [docs/code-signing.md](docs/code-signing.md) for the signing workflow and GitHub Actions secrets.
-
-## Francais
-
-SignalWall est un petit host de fonds d'ecran dynamiques Windows, open source, construit de zero pour Quote Signal.
-
-Il cree une fenetre WebView2 sans bordure par ecran, place ces fenetres derriere les icones du bureau, puis charge le fond d'ecran HTML Quote Signal inclus.
-
-### Installation prudente avec Codex ou Claude Code
-
-Le projet est gratuit et open source. L'installateur public actuel est une alpha non signee, donc le chemin recommande est de demander a Codex, Claude Code ou un agent equivalent d'inspecter le code source, compiler localement, puis presenter un rapport de securite avant de lancer l'app.
-
-Prompt pret a copier:
-
-**[Prompt d'installation source assistee par IA](docs/ai-assisted-install.md)**
-
-Ce prompt demande a l'agent de:
-
-- cloner uniquement `https://github.com/Sabertlili/signalwall`;
-- inspecter le code de l'app, le fond d'ecran HTML inclus, les scripts et les GitHub Actions;
-- verifier les binaires de release avec `Get-AuthenticodeSignature` et `Get-FileHash` si necessaire;
-- compiler depuis la source avec `dotnet restore` et `dotnet build`;
-- ne pas desactiver Microsoft Defender, Smart App Control ou la securite navigateur;
-- expliquer ses conclusions avant de lancer l'app ou de construire un installateur local.
-
-### Options de personnalisation
-
-- Un fond d'ecran par moniteur.
-- Meme citation partout ou citation differente par ecran.
-- Theme de texte global ou theme de texte par ecran.
-- Theme couleur/background global ou theme couleur/background par ecran.
-- Ordre physique des ecrans configurable.
-- Duree par citation, taille du texte, densite/vitesse des particules, opacite de grille, barre de progression, ordre aleatoire et effets de transition.
 
 ## License
 
