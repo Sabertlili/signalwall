@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Quote Signal wallpaper capture</title>
+  <desc id="desc">A dark SignalWall wallpaper screen with a large quote, particles, grid, and progress bar.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#090a0b"/>
+      <stop offset="0.44" stop-color="#15120e"/>
+      <stop offset="1" stop-color="#071314"/>
+    </linearGradient>
+    <linearGradient id="quote" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff8ed"/>
+      <stop offset="0.58" stop-color="#f1cf94"/>
+      <stop offset="1" stop-color="#d5faf3"/>
+    </linearGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="58"/>
+    </filter>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#fff8ed" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1440" height="900" fill="url(#bg)"/>
+  <circle cx="174" cy="160" r="180" fill="#d86c77" opacity=".14" filter="url(#soft)"/>
+  <circle cx="1260" cy="142" r="230" fill="#5fc4b8" opacity=".13" filter="url(#soft)"/>
+  <circle cx="1218" cy="784" r="260" fill="#f0b35a" opacity=".13" filter="url(#soft)"/>
+  <rect width="1440" height="900" fill="url(#grid)" opacity=".78"/>
+  <g opacity=".82">
+    <rect x="156" y="132" width="4" height="4" fill="#d86c77"/>
+    <rect x="704" y="142" width="4" height="4" fill="#d86c77"/>
+    <rect x="1212" y="246" width="4" height="4" fill="#5fc4b8"/>
+    <rect x="1048" y="340" width="3" height="3" fill="#f0b35a"/>
+    <rect x="181" y="608" width="3" height="3" fill="#5fc4b8"/>
+    <rect x="802" y="650" width="4" height="4" fill="#5fc4b8"/>
+    <rect x="1126" y="708" width="4" height="4" fill="#d86c77"/>
+    <rect x="1298" y="818" width="3" height="3" fill="#f0b35a"/>
+    <path d="M156 132 86 256" stroke="#fff8ed" stroke-opacity=".05"/>
+    <path d="M1126 708 1218 615" stroke="#fff8ed" stroke-opacity=".055"/>
+    <path d="M704 142 846 82" stroke="#fff8ed" stroke-opacity=".045"/>
+  </g>
+  <g transform="translate(72 230)">
+    <path d="M0 0H92" stroke="#f0b35a" stroke-width="2"/>
+    <path d="M92 0H186" stroke="#5fc4b8" stroke-width="2"/>
+    <text x="214" y="8" fill="#d7d1c5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="800">SIGNAL 03</text>
+  </g>
+  <text x="72" y="410" fill="url(#quote)" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="112" font-weight="820" letter-spacing="0">
+    <tspan x="72" dy="0">Every pixel argues</tspan>
+    <tspan x="72" dy="124">for attention.</tspan>
+    <tspan x="72" dy="124">Most should lose.</tspan>
+  </text>
+  <text x="72" y="780" fill="#d7d1c5" opacity=".78" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="30" font-weight="760">Design note</text>
+  <rect x="72" y="828" width="472" height="3" fill="#fff8ed" opacity=".25"/>
+  <rect x="72" y="828" width="168" height="3" fill="#f0b35a"/>
+  <rect x="170" y="828" width="84" height="3" fill="#5fc4b8"/>
+  <rect x="238" y="828" width="52" height="3" fill="#d86c77"/>
+</svg>
