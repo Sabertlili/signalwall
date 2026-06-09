@@ -47,8 +47,16 @@ jobs:
             throw "Installer signing was configured, but the final installer signature is not valid."
           }
 
+      - name: Generate checksum
+        shell: pwsh
+        run: |
+          $installer = "./dist/SignalWallSetup-v0.1.0-win-x64.exe"
+          $hash = Get-FileHash -Algorithm SHA256 -Path $installer
+          "$($hash.Hash.ToLowerInvariant())  SignalWallSetup-v0.1.0-win-x64.exe" | Set-Content -Encoding utf8 ./dist/SHA256SUMS.txt
+          Get-Content ./dist/SHA256SUMS.txt
+
       - name: Upload installer to v0.1.0 release
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload v0.1.0 ./dist/SignalWallSetup-v0.1.0-win-x64.exe --clobber
+        run: gh release upload v0.1.0 ./dist/SignalWallSetup-v0.1.0-win-x64.exe ./dist/SHA256SUMS.txt --clobber
