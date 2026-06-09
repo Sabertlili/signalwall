@@ -12,7 +12,7 @@ SignalWall is a free, open-source Windows live wallpaper app for calm, intention
 
 It creates one borderless WebView2 wallpaper window per monitor, attaches those windows behind the desktop icons, and loads the bundled Quote Signal HTML wallpaper.
 
-[Website](https://nestcells.com) | [Source-first install prompt](docs/ai-assisted-install.en.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md) | [Launch kit](docs/launch-kit.md)
+[Website](https://nestcells.com) | [Source-first install prompt](docs/ai-assisted-install.en.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md) | [Launch kit](docs/launch-kit.md) | [Product Hunt pack](docs/product-hunt-submission.md)
 
 ## Why it exists
 
