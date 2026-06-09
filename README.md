@@ -12,7 +12,7 @@ SignalWall is a free, open-source Windows live wallpaper app for calm, intention
 
 It creates one borderless WebView2 wallpaper window per monitor, attaches those windows behind the desktop icons, and loads the bundled Quote Signal HTML wallpaper.
 
-[Website](https://nestcells.com) · [Source-first install prompt](docs/ai-assisted-install.en.md) · [Roadmap](ROADMAP.md) · [Architecture](ARCHITECTURE.md) · [Launch kit](docs/launch-kit.md)
+[Website](https://nestcells.com) | [Source-first install prompt](docs/ai-assisted-install.en.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md) | [Launch kit](docs/launch-kit.md)
 
 ## Why it exists
 
@@ -23,13 +23,22 @@ Most live wallpapers are designed to impress for five seconds. SignalWall is des
 - Quote and theme systems that can be personalized without touching code.
 - A source-first install path while the alpha installer is unsigned.
 
-## Product captures
+## Product preview
 
-![Quote Signal wallpaper capture](docs/assets/quote-signal-capture.svg)
+![SignalWall overview](docs/assets/readme-overview.svg)
 
-![Customization workflow](docs/assets/customization-workflow.svg)
+<details>
+<summary>More product captures</summary>
 
-![Screen layout and modes](docs/assets/screen-layout-modes.svg)
+| Wallpaper | Control center |
+| --- | --- |
+| ![Quote Signal wallpaper capture](docs/assets/quote-signal-capture.svg) | ![Customization workflow](docs/assets/customization-workflow.svg) |
+
+| Multi-screen workflow |
+| --- |
+| ![Screen layout and modes](docs/assets/screen-layout-modes.svg) |
+
+</details>
 
 ## Install safely with Codex or Claude Code
 

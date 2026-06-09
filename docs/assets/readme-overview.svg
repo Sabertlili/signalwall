@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">SignalWall overview</title>
+  <desc id="desc">A compact overview of SignalWall showing a live quote wallpaper, control center, and multi-screen workflow.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#070806"/>
+      <stop offset="1" stop-color="#0b1311"/>
+    </linearGradient>
+    <linearGradient id="quote" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fff8ed"/>
+      <stop offset=".56" stop-color="#e7c174"/>
+      <stop offset="1" stop-color="#98d6c8"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#e7c174"/>
+      <stop offset=".55" stop-color="#98d6c8"/>
+      <stop offset="1" stop-color="#d8757c"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0v48" fill="none" stroke="#f6efe2" stroke-opacity=".055"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+  <g font-family="Inter, Segoe UI, Arial, sans-serif">
+    <text x="64" y="86" fill="#f6efe2" font-size="26" font-weight="820">SIGNALWALL BY NESTCELLS</text>
+    <text x="64" y="176" fill="#fff8ed" font-size="82" font-weight="820">Calm live wallpapers</text>
+    <text x="64" y="226" fill="#bdb6aa" font-size="27" font-weight="650">Open-source, multi-monitor, source-first Windows wallpaper app.</text>
+
+    <g transform="translate(64 292)">
+      <rect width="448" height="304" rx="12" fill="#0a0c0a" stroke="#f6efe2" stroke-opacity=".16"/>
+      <path d="M34 52h86" stroke="url(#accent)" stroke-width="2"/>
+      <text x="138" y="60" fill="#bdb6aa" font-size="18" font-weight="820">SIGNAL 01</text>
+      <text x="34" y="140" fill="url(#quote)" font-size="48" font-weight="820">Every pixel</text>
+      <text x="34" y="196" fill="url(#quote)" font-size="48" font-weight="820">should earn</text>
+      <text x="34" y="252" fill="url(#quote)" font-size="48" font-weight="820">its place.</text>
+      <rect x="34" y="274" width="284" height="3" fill="#f6efe2" opacity=".18"/>
+      <rect x="34" y="274" width="142" height="3" fill="url(#accent)"/>
+    </g>
+
+    <g transform="translate(552 292)">
+      <rect width="300" height="304" rx="12" fill="#f6efe2" stroke="#f6efe2" stroke-opacity=".2"/>
+      <text x="24" y="48" fill="#111715" font-size="26" font-weight="820">One control center</text>
+      <text x="24" y="82" fill="#546463" font-size="17" font-weight="650">Timing, themes, screens.</text>
+      <g transform="translate(24 120)">
+        <rect width="252" height="34" rx="8" fill="#eaf1ee"/>
+        <rect width="154" height="34" rx="8" fill="#2b6f73"/>
+        <text x="18" y="23" fill="#fffdf7" font-size="14" font-weight="820">Different quote</text>
+      </g>
+      <g transform="translate(24 172)">
+        <rect width="252" height="34" rx="8" fill="#eaf1ee"/>
+        <text x="18" y="23" fill="#111715" font-size="14" font-weight="760">Screen order: 2, 3, 1</text>
+      </g>
+      <g transform="translate(24 224)">
+        <rect width="74" height="16" fill="#e7c174"/>
+        <rect x="88" width="74" height="16" fill="#98d6c8"/>
+        <rect x="176" width="76" height="16" fill="#b58bd7"/>
+      </g>
+    </g>
+
+    <g transform="translate(892 292)">
+      <rect width="324" height="304" rx="12" fill="#111716" stroke="#f6efe2" stroke-opacity=".16"/>
+      <text x="24" y="48" fill="#f6efe2" font-size="26" font-weight="820">Multi-screen first</text>
+      <text x="24" y="82" fill="#bdb6aa" font-size="17" font-weight="650">Same quote or per-screen.</text>
+      <g transform="translate(24 126)">
+        <rect width="82" height="88" rx="8" fill="#171410"/>
+        <rect x="102" y="-18" width="96" height="106" rx="8" fill="#f6efe2"/>
+        <rect x="218" width="82" height="88" rx="8" fill="#0d0f11"/>
+        <text x="20" y="124" fill="#98d6c8" font-size="16" font-weight="820">2</text>
+        <text x="142" y="124" fill="#2b6f73" font-size="16" font-weight="820">3</text>
+        <text x="256" y="124" fill="#e7c174" font-size="16" font-weight="820">1</text>
+      </g>
+      <path d="M24 270h276" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

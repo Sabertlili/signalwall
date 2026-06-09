@@ -12,7 +12,7 @@ SignalWall est une application Windows gratuite et open source pour des fonds d�
 
 Elle crée une fenêtre WebView2 sans bordure par écran, place ces fenêtres derrière les icônes du bureau, puis charge le fond d’écran HTML Quote Signal inclus.
 
-[Site web](https://nestcells.com) · [Prompt d’installation depuis la source](docs/ai-assisted-install.fr.md) · [Roadmap](ROADMAP.md) · [Architecture](ARCHITECTURE.md) · [Kit de lancement](docs/launch-kit.fr.md)
+[Site web](https://nestcells.com) | [Prompt d’installation depuis la source](docs/ai-assisted-install.fr.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md) | [Kit de lancement](docs/launch-kit.fr.md)
 
 ## Pourquoi ce projet existe
 
@@ -23,13 +23,22 @@ La plupart des fonds d’écran dynamiques sont conçus pour impressionner penda
 - Citations et thèmes personnalisables sans toucher au code.
 - Installation depuis la source tant que l’installateur alpha n’est pas signé.
 
-## Captures produit
+## Aperçu produit
 
-![Capture du fond d’écran Quote Signal](docs/assets/quote-signal-capture.svg)
+![Aperçu SignalWall](docs/assets/readme-overview.svg)
 
-![Flux de personnalisation](docs/assets/customization-workflow.svg)
+<details>
+<summary>Voir plus de captures</summary>
 
-![Ordre des écrans et modes](docs/assets/screen-layout-modes.svg)
+| Fond d’écran | Centre de contrôle |
+| --- | --- |
+| ![Capture du fond d’écran Quote Signal](docs/assets/quote-signal-capture.svg) | ![Flux de personnalisation](docs/assets/customization-workflow.svg) |
+
+| Workflow multi-écran |
+| --- |
+| ![Ordre des écrans et modes](docs/assets/screen-layout-modes.svg) |
+
+</details>
 
 ## Installation prudente avec Codex ou Claude Code
 
