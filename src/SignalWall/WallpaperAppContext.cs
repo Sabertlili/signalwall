@@ -4,25 +4,30 @@ public sealed class WallpaperAppContext : ApplicationContext
 {
     private readonly NotifyIcon trayIcon;
     private readonly List<WallpaperForm> forms = [];
+    private ControlCenterForm? controlCenter;
 
     public WallpaperAppContext()
     {
         trayIcon = new NotifyIcon
         {
-            Icon = SystemIcons.Application,
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath) ?? SystemIcons.Application,
             Text = "SignalWall",
             Visible = true,
             ContextMenuStrip = BuildMenu()
         };
 
         StartWallpapers();
+        ShowFirstRunExperience();
     }
 
     private ContextMenuStrip BuildMenu()
     {
         var menu = new ContextMenuStrip();
+        menu.Items.Add("Open control center", null, (_, _) => OpenControlCenter());
+        menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add("Reload wallpapers", null, (_, _) => ReloadWallpapers());
-        menu.Items.Add("Open web folder", null, (_, _) => OpenWebFolder());
+        menu.Items.Add("Open wallpaper folder", null, (_, _) => OpenWebFolder());
+        menu.Items.Add("Visit SignalWall website", null, (_, _) => OpenWebsite());
         menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add("Exit", null, (_, _) => ExitThread());
         return menu;
@@ -35,9 +40,18 @@ public sealed class WallpaperAppContext : ApplicationContext
         StopWallpapers();
 
         var workerWindow = DesktopWorker.EnsureWorkerWindow();
-        foreach (var screen in Screen.AllScreens.OrderBy(item => item.Bounds.Left).ThenBy(item => item.Bounds.Top))
+        var screens = Screen.AllScreens
+            .OrderBy(item => item.Bounds.Left)
+            .ThenBy(item => item.Bounds.Top)
+            .ToArray();
+        var screenOrder = new ConfigStore(WebRoot).ReadScreenOrder();
+
+        for (var position = 0; position < screens.Length; position += 1)
         {
-            var slot = ScreenSlotResolver.Resolve(screen.Bounds);
+            var screen = screens[position];
+            var slot = position < screenOrder.Count
+                ? screenOrder[position]
+                : ScreenSlotResolver.Resolve(screen.Bounds);
             var form = new WallpaperForm(screen, slot, WebRoot);
             form.Show();
             DesktopWorker.AttachToDesktop(form.Handle, workerWindow, screen.Bounds);
@@ -51,6 +65,27 @@ public sealed class WallpaperAppContext : ApplicationContext
         {
             form.Reload();
         }
+    }
+
+    private void OpenControlCenter()
+    {
+        if (controlCenter is null || controlCenter.IsDisposed)
+        {
+            controlCenter = new ControlCenterForm(WebRoot, StartWallpapers);
+        }
+
+        if (!controlCenter.Visible)
+        {
+            controlCenter.Show();
+        }
+
+        if (controlCenter.WindowState == FormWindowState.Minimized)
+        {
+            controlCenter.WindowState = FormWindowState.Normal;
+        }
+
+        controlCenter.BringToFront();
+        controlCenter.Activate();
     }
 
     private static void OpenWebFolder()
@@ -68,6 +103,35 @@ public sealed class WallpaperAppContext : ApplicationContext
         });
     }
 
+    private static void OpenWebsite()
+    {
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "https://nestcells.com",
+            UseShellExecute = true
+        });
+    }
+
+    private void ShowFirstRunExperience()
+    {
+        var stateRoot = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "SignalWall");
+        var markerPath = Path.Combine(stateRoot, "control-center-introduced-v0.2");
+
+        if (!File.Exists(markerPath))
+        {
+            Directory.CreateDirectory(stateRoot);
+            File.WriteAllText(markerPath, DateTimeOffset.UtcNow.ToString("O"));
+            OpenControlCenter();
+            return;
+        }
+
+        trayIcon.BalloonTipTitle = "SignalWall is running";
+        trayIcon.BalloonTipText = "Open the tray menu to customize every screen.";
+        trayIcon.ShowBalloonTip(4000);
+    }
+
     private void StopWallpapers()
     {
         foreach (var form in forms)
@@ -81,6 +145,8 @@ public sealed class WallpaperAppContext : ApplicationContext
 
     protected override void ExitThreadCore()
     {
+        controlCenter?.Close();
+        controlCenter?.Dispose();
         StopWallpapers();
         trayIcon.Visible = false;
         trayIcon.Dispose();

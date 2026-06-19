@@ -2,6 +2,10 @@
 
 English: [README.md](README.md)
 
+<p align="center">
+  <img src="src/SignalWall/assets/SignalWall.png" width="112" alt="Icône de l’application SignalWall">
+</p>
+
 [![CI](https://github.com/Sabertlili/signalwall/actions/workflows/ci.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/Sabertlili/signalwall/actions/workflows/codeql.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/codeql.yml)
 [![Installateur](https://github.com/Sabertlili/signalwall/actions/workflows/build-installer.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/build-installer.yml)
@@ -10,7 +14,7 @@ English: [README.md](README.md)
 
 SignalWall est une application Windows gratuite et open source pour des fonds d’écran dynamiques calmes, intentionnels et multi-écrans.
 
-Elle crée une fenêtre WebView2 sans bordure par écran, place ces fenêtres derrière les icônes du bureau, puis charge le fond d’écran HTML Quote Signal inclus.
+La version 0.2 ajoute un centre de contrôle intégré pour le rythme, le mouvement, l’ordre des écrans, les packs de citations et les thèmes de texte et de couleur. SignalWall crée une fenêtre WebView2 sans bordure par écran et rassemble tous les paramètres dans la barre système.
 
 [Site web](https://nestcells.com) | [Prompt d’installation depuis la source](docs/ai-assisted-install.fr.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md) | [Kit de lancement](docs/launch-kit.fr.md)
 
@@ -25,7 +29,9 @@ La plupart des fonds d’écran dynamiques sont conçus pour impressionner penda
 
 ## Aperçu produit
 
-![Aperçu SignalWall](docs/assets/readme-overview.svg)
+![Aperçu du site et du fond d’écran SignalWall](docs/launch-assets/product-hunt-gallery-1-hero-v2.png)
+
+![Centre de contrôle intégré SignalWall](docs/launch-assets/product-hunt-gallery-3-control-center-v2.png)
 
 <details>
 <summary>Voir plus de captures</summary>
@@ -42,7 +48,7 @@ La plupart des fonds d’écran dynamiques sont conçus pour impressionner penda
 
 ## Installation prudente avec Codex ou Claude Code
 
-Le projet est gratuit et open source. L’installateur public actuel est une alpha non signée. Le chemin recommandé est donc de demander à Codex, Claude Code ou un agent équivalent d’inspecter le code source, de compiler localement, puis de présenter un rapport de sécurité avant de lancer l’application.
+Le projet est gratuit et open source. Les binaires publics sont actuellement non signés et Windows Smart App Control peut les bloquer sur les systèmes stricts. Ne désactivez pas la sécurité Windows. Le chemin recommandé est de demander à Codex, Claude Code ou un agent équivalent d’inspecter le code source, de compiler localement, puis de présenter un rapport de sécurité avant de lancer l’application.
 
 **[Copier le prompt d’installation depuis la source](docs/ai-assisted-install.fr.md)**
 
@@ -58,6 +64,7 @@ Ce prompt demande à l’agent de :
 ## Fonctionnalités actuelles
 
 - Fenêtre de fond d’écran par moniteur.
+- Centre de contrôle WebView2 intégré, accessible depuis la barre système.
 - Rendu HTML/CSS/JS via WebView2.
 - Quote Signal inclus comme fond d’écran par défaut.
 - Même citation sur tous les écrans ou citation différente par écran.
@@ -65,7 +72,9 @@ Ce prompt demande à l’agent de :
 - Thèmes couleur / arrière-plan globaux ou par écran.
 - Ordre physique des écrans configurable.
 - Durée par citation, taille du texte, particules, opacité de grille, barre de progression, ordre aléatoire et transitions.
-- Menu tray avec rechargement, ouverture du dossier web et fermeture.
+- Thèmes clair et sombre pour le centre de contrôle.
+- Création rapide de packs avec une phrase par ligne.
+- Menu de barre système avec centre de contrôle, rechargement, dossier du fond d’écran, site web et fermeture.
 
 ## Prérequis
 
@@ -88,7 +97,7 @@ dotnet build .\src\SignalWall\SignalWall.csproj -c Release
 dotnet run --project .\src\SignalWall\SignalWall.csproj -c Release
 ```
 
-Après lancement, SignalWall apparaît dans la zone de notification. Clic droit sur l’icône pour recharger les fonds d’écran, ouvrir le dossier web inclus ou quitter.
+Au premier lancement, SignalWall ouvre le centre de contrôle. Ensuite, utilisez **Open control center** dans le menu de la barre système.
 
 ## Publier localement
 
@@ -99,10 +108,11 @@ dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-c
 ## Confiance et sécurité
 
 - Les installateurs alpha publics ne sont pas signés et peuvent être bloqués par Windows Smart App Control.
+- Le projet prépare une candidature auprès de [SignPath Foundation](https://signpath.org/) pour obtenir gratuitement une signature Authenticode open source.
 - Les artefacts de release incluent un checksum SHA-256 quand ils sont générés par le workflow d’installateur.
 - CodeQL et CI tournent dans GitHub Actions.
 - Dependabot suit les mises à jour NuGet et GitHub Actions.
-- Voir [SECURITY.md](SECURITY.md) et [docs/code-signing.md](docs/code-signing.md).
+- Voir [SECURITY.md](SECURITY.md), [docs/code-signing.md](docs/code-signing.md) et le [brouillon de candidature SignPath](docs/signpath-application.md).
 
 ## Contribuer
 

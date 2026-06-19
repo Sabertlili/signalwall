@@ -4,10 +4,25 @@ SignalWall can build an installer without signing, but Windows Smart App Control
 
 For public distribution, use one of these paths:
 
+- SignPath Foundation: free Authenticode signing for qualifying open-source projects, using a repository-linked managed pipeline.
 - Microsoft Store MSIX: Microsoft signs the package after certification. This is the cleanest user experience.
 - Azure Artifact Signing / Trusted Signing or a public CA code-signing certificate: use this when distributing outside the Store.
 
 Do not use a self-signed certificate for public downloads. It only works on machines where the certificate has been manually trusted, and it can still trigger SmartScreen or Smart App Control blocks.
+
+## SignPath Foundation plan
+
+SignalWall is preparing an application to [SignPath Foundation](https://signpath.org/). Microsoft documents SignPath Foundation as a free signing option for qualifying open-source Windows projects.
+
+Before applying:
+
+- keep the repository public and the MIT license visible;
+- ensure CI and CodeQL pass on `main`;
+- build release artifacts only from GitHub Actions;
+- keep release scripts, checksums, and provenance visible;
+- document maintainers and the project’s non-commercial open-source status.
+
+The final application and acceptance of SignPath terms require explicit maintainer approval.
 
 ## GitHub Actions PFX signing
 
@@ -41,5 +56,5 @@ You can also pass signing inputs locally:
 Verify the installer:
 
 ```powershell
-Get-AuthenticodeSignature .\dist\SignalWallSetup-v0.1.0-win-x64.exe
+Get-AuthenticodeSignature .\dist\SignalWallSetup-v0.2.0-win-x64.exe
 ```

@@ -9,3 +9,5 @@ publish/
 dist/
 installer-work/
 *.zip
+__pycache__/
+*.pyc

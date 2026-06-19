@@ -27,13 +27,13 @@ SignalWall
 Tagline:
 
 ```text
-Calm live wallpapers for Windows multi-monitor desks
+Live wallpapers with a built-in multi-screen control center
 ```
 
 Short description:
 
 ```text
-SignalWall is a free, open-source Windows live wallpaper app for calm multi-monitor desktops. Quote Signal adds subtle motion, quote themes, per-screen controls, color themes, and a source-first install path.
+SignalWall is a free, open-source Windows live wallpaper app for calm multi-monitor desktops. Version 0.2 adds a built-in control center, real per-screen themes, quote-pack editing, screen ordering, and a transparent source-first install path.
 ```
 
 Pricing:
@@ -45,7 +45,7 @@ Free
 Status:
 
 ```text
-Available now / alpha
+Version 0.2 / open-source alpha
 ```
 
 Suggested topics:
@@ -69,15 +69,16 @@ Source-first install prompt: https://github.com/Sabertlili/signalwall/blob/main/
 Thumbnail:
 
 ```text
-docs/launch-assets/product-hunt-thumbnail.png
+docs/launch-assets/product-hunt-thumbnail-v2.png
 ```
 
 Gallery:
 
 ```text
-docs/launch-assets/product-hunt-gallery-1-wallpaper.png
-docs/launch-assets/product-hunt-gallery-2-control-center.png
-docs/launch-assets/product-hunt-gallery-3-multi-monitor.png
+docs/launch-assets/product-hunt-gallery-1-hero-v2.png
+docs/launch-assets/product-hunt-gallery-2-demo-v2.png
+docs/launch-assets/product-hunt-gallery-3-control-center-v2.png
+docs/launch-assets/product-hunt-gallery-4-install-v2.png
 ```
 
 ## First comment
@@ -87,9 +88,9 @@ I built SignalWall because my desktop was becoming visual noise.
 
 Most live wallpapers are built to impress for a few seconds. I wanted something quiet enough to keep on screen all day: calm typography, subtle motion, and per-monitor behavior that works with real Windows setups.
 
-The first bundled wallpaper is Quote Signal. It lets you choose same or different quotes per screen, text themes, color themes, timing, progress, particle density, grid opacity, transition style, and monitor order from one control center.
+The first launch taught me that a polished wallpaper was not enough. Version 0.2 now includes the control center directly inside SignalWall. It lets you choose same or different quotes per screen, create quote packs, edit text and color themes, tune timing and motion, and map the physical screen order from one place.
 
-The project is open source and currently alpha. The installer is unsigned, so the recommended install path is source-first: use Codex, Claude Code, or another local agent to inspect the repository, build locally, and report security findings before launch.
+The project is open source and currently alpha. Windows Smart App Control can block unsigned binaries, so the app never asks users to disable security. The recommended install path remains source-first while the project prepares a SignPath Foundation application for free open-source signing.
 
 I would love feedback on:
 

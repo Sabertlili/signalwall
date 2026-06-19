@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quote Signal Control Center</title>
+  <link rel="stylesheet" href="control-center.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="app-mark" aria-hidden="true">S</span>
+        <div>
+          <p class="product-name">SignalWall</p>
+          <h1>Control center</h1>
+          <p id="setupSummary">Loading...</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="ghost" id="themeToggleBtn" type="button">Light</button>
+        <button class="ghost" id="reloadBtn" type="button">Reload</button>
+        <button class="primary" id="saveBtn" type="button">Save and apply</button>
+      </div>
+    </header>
+
+    <section class="notice" id="notice" hidden></section>
+
+    <section class="panel">
+      <div class="section-head">
+        <h2>Wallpaper</h2>
+        <div class="compact-toggles">
+          <label class="check"><input id="progressVisible" type="checkbox"> Progress</label>
+          <label class="check"><input id="randomOrder" type="checkbox"> Random</label>
+        </div>
+      </div>
+      <div class="settings-grid">
+        <label class="range-control">
+          <span>Seconds per quote <b id="quoteSecondsValue"></b></span>
+          <input id="quoteSeconds" type="range" min="5" max="300" step="1">
+        </label>
+        <label class="range-control">
+          <span>Text size <b id="textScaleValue"></b></span>
+          <input id="textScale" type="range" min="60" max="160" step="1">
+        </label>
+        <label class="range-control">
+          <span>Particles <b id="particleAmountValue"></b></span>
+          <input id="particleAmount" type="range" min="0" max="120" step="1">
+        </label>
+        <label class="range-control">
+          <span>Particle speed <b id="particleSpeedValue"></b></span>
+          <input id="particleSpeed" type="range" min="0" max="200" step="1">
+        </label>
+        <label class="range-control">
+          <span>Grid opacity <b id="gridOpacityValue"></b></span>
+          <input id="gridOpacity" type="range" min="0" max="100" step="1">
+        </label>
+        <label>
+          Transition
+          <select id="transitionEffect">
+            <option value="none">None</option>
+            <option value="fade">Fade</option>
+            <option value="slide">Slide</option>
+            <option value="rise">Rise</option>
+            <option value="scale">Scale</option>
+            <option value="glitch">Glitch soft</option>
+            <option value="random">Random</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <h2>Screens</h2>
+        <div class="mode-row">
+          <label>
+            Quotes
+            <select id="quoteDisplayMode">
+              <option value="0">Same</option>
+              <option value="1">Different</option>
+            </select>
+          </label>
+          <label>
+            Text
+            <select id="textThemeMode">
+              <option value="0">Same</option>
+              <option value="1">Per screen</option>
+            </select>
+          </label>
+          <label>
+            Colors
+            <select id="colorThemeMode">
+              <option value="0">Same</option>
+              <option value="1">Per screen</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="global-row">
+        <label>
+          Global text
+          <select id="globalTextTheme"></select>
+        </label>
+        <label>
+          Global color
+          <select id="globalColorTheme"></select>
+        </label>
+      </div>
+      <div class="screen-grid" id="screenGrid"></div>
+    </section>
+
+    <section class="work-grid">
+      <section class="panel">
+        <div class="section-head">
+          <h2>Text</h2>
+          <div class="mini-actions">
+            <button class="ghost" id="addTextThemeBtn" type="button">New</button>
+            <button class="danger" id="deleteTextThemeBtn" type="button">Delete</button>
+          </div>
+        </div>
+        <div class="editor-grid">
+          <label>
+            Theme
+            <select id="textThemeSelect"></select>
+          </label>
+          <label>
+            Name
+            <input id="textThemeName" type="text">
+          </label>
+        </div>
+        <label>
+          Phrases
+          <textarea id="quoteInput" rows="7" placeholder="One phrase per line&#10;Each line becomes a separate quote"></textarea>
+        </label>
+        <div class="editor-grid">
+          <label>
+            Signature
+            <input id="authorInput" type="text" placeholder="Optional">
+          </label>
+          <button class="primary align-end" id="addQuoteBtn" type="button">Add lines</button>
+        </div>
+        <div class="quote-list" id="quoteList"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Colors</h2>
+          <div class="mini-actions">
+            <button class="ghost" id="addColorThemeBtn" type="button">New</button>
+            <button class="danger" id="deleteColorThemeBtn" type="button">Delete</button>
+          </div>
+        </div>
+        <div class="editor-grid">
+          <label>
+            Theme
+            <select id="colorThemeSelect"></select>
+          </label>
+          <label>
+            Name
+            <input id="colorThemeName" type="text">
+          </label>
+        </div>
+        <div class="preview-card" id="palettePreview">
+          <span id="previewKicker">Preview</span>
+          <strong id="previewQuote">Every pixel argues for attention.</strong>
+          <small id="previewAuthor">Design note</small>
+        </div>
+        <div class="color-fields" id="colorFields"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="control-center.js"></script>
+</body>
+</html>

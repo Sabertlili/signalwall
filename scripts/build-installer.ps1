@@ -1,7 +1,7 @@
 param(
     [string] $Configuration = "Release",
     [string] $Runtime = "win-x64",
-    [string] $Version = "0.1.0",
+    [string] $Version = "0.2.0",
     [string] $SigningPfxPath = $env:SIGNALWALL_SIGNING_PFX_PATH,
     [string] $SigningPfxBase64 = $env:SIGNALWALL_SIGNING_PFX_BASE64,
     [string] $SigningPfxPassword = $env:SIGNALWALL_SIGNING_PFX_PASSWORD,

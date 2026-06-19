@@ -2,6 +2,10 @@
 
 Français: [README.fr.md](README.fr.md)
 
+<p align="center">
+  <img src="src/SignalWall/assets/SignalWall.png" width="112" alt="SignalWall app icon">
+</p>
+
 [![CI](https://github.com/Sabertlili/signalwall/actions/workflows/ci.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/Sabertlili/signalwall/actions/workflows/codeql.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/codeql.yml)
 [![Installer](https://github.com/Sabertlili/signalwall/actions/workflows/build-installer.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/build-installer.yml)
@@ -10,7 +14,7 @@ Français: [README.fr.md](README.fr.md)
 
 SignalWall is a free, open-source Windows live wallpaper app for calm, intentional multi-monitor desktops.
 
-It creates one borderless WebView2 wallpaper window per monitor, attaches those windows behind the desktop icons, and loads the bundled Quote Signal HTML wallpaper.
+Version 0.2 adds a built-in control center for timing, motion, screen order, quote packs, text themes, and color themes. SignalWall creates one borderless WebView2 wallpaper window per monitor and keeps every setting in the app tray.
 
 [Website](https://nestcells.com) | [Source-first install prompt](docs/ai-assisted-install.en.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md) | [Launch kit](docs/launch-kit.md) | [Product Hunt pack](docs/product-hunt-submission.md)
 
@@ -25,7 +29,9 @@ Most live wallpapers are designed to impress for five seconds. SignalWall is des
 
 ## Product preview
 
-![SignalWall overview](docs/assets/readme-overview.svg)
+![SignalWall website and live wallpaper preview](docs/launch-assets/product-hunt-gallery-1-hero-v2.png)
+
+![SignalWall built-in control center](docs/launch-assets/product-hunt-gallery-3-control-center-v2.png)
 
 <details>
 <summary>More product captures</summary>
@@ -42,7 +48,7 @@ Most live wallpapers are designed to impress for five seconds. SignalWall is des
 
 ## Install safely with Codex or Claude Code
 
-SignalWall is free and open source. The current public installer is an unsigned alpha, so the recommended path is to ask Codex, Claude Code, or another local coding agent to inspect the source, build locally, and report security findings before launching the app.
+SignalWall is free and open source. Public binaries are currently unsigned, and Windows Smart App Control can block them on strict systems. Do not disable Windows security. The recommended path is to ask Codex, Claude Code, or another local coding agent to inspect the source, build locally, and report security findings before launching the app.
 
 **[Copy the AI-assisted source install prompt](docs/ai-assisted-install.en.md)**
 
@@ -58,6 +64,7 @@ That prompt tells the agent to:
 ## Current features
 
 - Multi-monitor wallpaper windows.
+- Built-in WebView2 control center opened from the tray.
 - WebView2-powered HTML/CSS/JS wallpaper rendering.
 - Quote Signal bundled as the default wallpaper.
 - Same quote across screens or different quotes per screen.
@@ -65,7 +72,9 @@ That prompt tells the agent to:
 - Global or per-screen color/background themes.
 - Screen order mapping for left, center, and right monitor layouts.
 - Quote timing, text size, particles, grid opacity, progress bar, random order, and transition effects.
-- Tray menu with reload, open web folder, and exit.
+- Light and dark control-center themes.
+- One-phrase-per-line quote pack creation.
+- Tray menu with control center, reload, wallpaper folder, website, and exit.
 
 ## Requirements
 
@@ -88,7 +97,7 @@ dotnet build .\src\SignalWall\SignalWall.csproj -c Release
 dotnet run --project .\src\SignalWall\SignalWall.csproj -c Release
 ```
 
-After launch, SignalWall appears in the system tray. Right-click the tray icon to reload wallpapers, open the bundled web folder, or exit.
+On first launch, SignalWall opens the control center. Later, use **Open control center** from the tray menu.
 
 ## Publish locally
 
@@ -99,10 +108,11 @@ dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-c
 ## Trust and security
 
 - Public alpha installers are unsigned and may be blocked by Windows Smart App Control.
+- The project is preparing an application to [SignPath Foundation](https://signpath.org/) for free open-source Authenticode signing.
 - Release artifacts include a SHA-256 checksum when built by the installer workflow.
 - CodeQL and CI run through GitHub Actions.
 - Dependabot tracks NuGet and GitHub Actions updates.
-- See [SECURITY.md](SECURITY.md) and [docs/code-signing.md](docs/code-signing.md).
+- See [SECURITY.md](SECURITY.md), [docs/code-signing.md](docs/code-signing.md), and the [SignPath application draft](docs/signpath-application.md).
 
 ## Contributing
 
