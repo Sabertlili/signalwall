@@ -31,7 +31,7 @@ Most live wallpapers are image-first or video-first. SignalWall is typography-fi
 
 ## Product preview
 
-![SignalWall website and live wallpaper preview](docs/launch-assets/product-hunt-gallery-1-hero-v2.png)
+![SignalWall typography-first positioning](docs/launch-assets/product-hunt-gallery-1-positioning-v3.png)
 
 ![SignalWall built-in control center](docs/launch-assets/product-hunt-gallery-3-control-center-v2.png)
 

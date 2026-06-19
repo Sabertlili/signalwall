@@ -31,7 +31,7 @@ La plupart des fonds d’écran dynamiques sont centrés sur l’image ou la vid
 
 ## Aperçu produit
 
-![Aperçu du site et du fond d’écran SignalWall](docs/launch-assets/product-hunt-gallery-1-hero-v2.png)
+![Positionnement typographique de SignalWall](docs/launch-assets/product-hunt-gallery-1-positioning-v3.png)
 
 ![Centre de contrôle intégré SignalWall](docs/launch-assets/product-hunt-gallery-3-control-center-v2.png)
 
