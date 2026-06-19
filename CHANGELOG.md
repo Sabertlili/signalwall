@@ -2,6 +2,16 @@
 
 All notable changes to SignalWall will be documented here.
 
+## v0.3.0
+
+- Added import and export for shareable SignalWall preset files.
+- Added strict preset normalization and host-side configuration validation.
+- Added a safe screen-order fallback when the configuration file is damaged.
+- Added automated tests for configuration persistence and monitor-slot mapping.
+- Added SPDX SBOM generation, GitHub build provenance, and SBOM attestations.
+- Added a machine-readable release manifest and local verification script.
+- Pinned the WebView2 dependency and updated GitHub Actions to current stable releases.
+
 ## v0.2.0
 
 - Added a built-in WebView2 control center.

@@ -10,7 +10,8 @@ flowchart LR
   Screens --> Forms["One borderless form per monitor"]
   Forms --> WebView["WebView2 runtime"]
   WebView --> Wallpaper["Bundled Quote Signal HTML/CSS/JS"]
-  Tray --> Commands["Reload / open web folder / exit"]
+  Tray --> Commands["Control center / reload / open folder / exit"]
+  Tray --> Presets["Import / export presets"]
 ```
 
 ## Main pieces
@@ -20,6 +21,8 @@ flowchart LR
 - `src/SignalWall/DesktopWorker.cs`: desktop-window attachment behavior.
 - `src/SignalWall/WallpaperForm.cs`: borderless WebView2 wallpaper window.
 - `src/SignalWall/ScreenSlotResolver.cs`: maps physical displays to screen slots.
+- `src/SignalWall/ConfigStore.cs`: validates and atomically persists configuration.
+- `src/SignalWall/ControlCenterForm.cs`: hosts the built-in control center.
 - `src/SignalWall/web`: bundled Quote Signal wallpaper.
 
 ## Security model
@@ -42,3 +45,5 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-installe
 ```
 
 Until a signed installer exists, users should prefer local source review and local builds.
+
+Every tagged release also includes SHA-256 checksums, an SPDX SBOM, a release manifest, and GitHub artifact attestations.

@@ -9,14 +9,15 @@ English: [README.md](README.md)
 [![CI](https://github.com/Sabertlili/signalwall/actions/workflows/ci.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/Sabertlili/signalwall/actions/workflows/codeql.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/codeql.yml)
 [![Installateur](https://github.com/Sabertlili/signalwall/actions/workflows/build-installer.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/build-installer.yml)
+[![Dernière version](https://img.shields.io/github/v/release/Sabertlili/signalwall?color=5fc4b8)](https://github.com/Sabertlili/signalwall/releases/latest)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-f6efe2.svg)](LICENSE)
 [![Windows](https://img.shields.io/badge/plateforme-Windows-98d6c8.svg)](#prérequis)
 
 SignalWall est une application Windows gratuite et open source pour des fonds d’écran dynamiques calmes, intentionnels et multi-écrans.
 
-La version 0.2 ajoute un centre de contrôle intégré pour le rythme, le mouvement, l’ordre des écrans, les packs de citations et les thèmes de texte et de couleur. SignalWall crée une fenêtre WebView2 sans bordure par écran et rassemble tous les paramètres dans la barre système.
+La version 0.3 ajoute l’import et l’export de presets partageables, des tests automatisés, un SBOM SPDX et une provenance de build GitHub signée cryptographiquement. SignalWall crée une fenêtre WebView2 sans bordure par écran et rassemble tous les paramètres dans la barre système.
 
-[Site web](https://nestcells.com) | [Prompt d’installation depuis la source](docs/ai-assisted-install.fr.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md) | [Kit de lancement](docs/launch-kit.fr.md)
+[Site web](https://nestcells.com) | [Dernière version](https://github.com/Sabertlili/signalwall/releases/latest) | [Vérifier une release](docs/release-verification.md) | [Prompt d’installation depuis la source](docs/ai-assisted-install.fr.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md)
 
 ## Pourquoi ce projet existe
 
@@ -74,6 +75,7 @@ Ce prompt demande à l’agent de :
 - Durée par citation, taille du texte, particules, opacité de grille, barre de progression, ordre aléatoire et transitions.
 - Thèmes clair et sombre pour le centre de contrôle.
 - Création rapide de packs avec une phrase par ligne.
+- Import et export de fichiers de preset partageables.
 - Menu de barre système avec centre de contrôle, rechargement, dossier du fond d’écran, site web et fermeture.
 
 ## Prérequis
@@ -87,8 +89,9 @@ La plupart des machines Windows 11 ont déjà WebView2. Si l’application ne pe
 ## Build
 
 ```powershell
-dotnet restore .\src\SignalWall\SignalWall.csproj
+dotnet restore .\tests\SignalWall.Tests\SignalWall.Tests.csproj
 dotnet build .\src\SignalWall\SignalWall.csproj -c Release
+dotnet test .\tests\SignalWall.Tests\SignalWall.Tests.csproj -c Release
 ```
 
 ## Lancer
@@ -109,10 +112,11 @@ dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-c
 
 - Les installateurs alpha publics ne sont pas signés et peuvent être bloqués par Windows Smart App Control.
 - Le projet prépare une candidature auprès de [SignPath Foundation](https://signpath.org/) pour obtenir gratuitement une signature Authenticode open source.
-- Les artefacts de release incluent un checksum SHA-256 quand ils sont générés par le workflow d’installateur.
-- CodeQL et CI tournent dans GitHub Actions.
+- Les releases incluent des empreintes SHA-256, un SBOM SPDX, un manifeste lisible par machine et un script local de vérification.
+- GitHub Actions signe la provenance du build et l’attestation SBOM avec Sigstore.
+- Les tests automatisés, CodeQL et la CI tournent dans GitHub Actions.
 - Dependabot suit les mises à jour NuGet et GitHub Actions.
-- Voir [SECURITY.md](SECURITY.md), [docs/code-signing.md](docs/code-signing.md) et le [brouillon de candidature SignPath](docs/signpath-application.md).
+- Voir [la vérification des releases](docs/release-verification.md), [SECURITY.md](SECURITY.md), [docs/code-signing.md](docs/code-signing.md) et le [brouillon de candidature SignPath](docs/signpath-application.md).
 
 ## Contribuer
 

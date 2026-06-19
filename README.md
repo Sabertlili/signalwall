@@ -9,14 +9,15 @@ Français: [README.fr.md](README.fr.md)
 [![CI](https://github.com/Sabertlili/signalwall/actions/workflows/ci.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/Sabertlili/signalwall/actions/workflows/codeql.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/codeql.yml)
 [![Installer](https://github.com/Sabertlili/signalwall/actions/workflows/build-installer.yml/badge.svg)](https://github.com/Sabertlili/signalwall/actions/workflows/build-installer.yml)
+[![Latest release](https://img.shields.io/github/v/release/Sabertlili/signalwall?color=5fc4b8)](https://github.com/Sabertlili/signalwall/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f6efe2.svg)](LICENSE)
 [![Windows](https://img.shields.io/badge/platform-Windows-98d6c8.svg)](#requirements)
 
 SignalWall is a free, open-source Windows live wallpaper app for calm, intentional multi-monitor desktops.
 
-Version 0.2 adds a built-in control center for timing, motion, screen order, quote packs, text themes, and color themes. SignalWall creates one borderless WebView2 wallpaper window per monitor and keeps every setting in the app tray.
+Version 0.3 adds shareable preset import/export, automated configuration tests, SPDX SBOMs, and cryptographically signed GitHub build provenance. SignalWall creates one borderless WebView2 wallpaper window per monitor and keeps every setting in the app tray.
 
-[Website](https://nestcells.com) | [Source-first install prompt](docs/ai-assisted-install.en.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md) | [Launch kit](docs/launch-kit.md) | [Product Hunt pack](docs/product-hunt-submission.md)
+[Website](https://nestcells.com) | [Latest release](https://github.com/Sabertlili/signalwall/releases/latest) | [Verify a release](docs/release-verification.md) | [Source-first install prompt](docs/ai-assisted-install.en.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md)
 
 ## Why it exists
 
@@ -74,6 +75,7 @@ That prompt tells the agent to:
 - Quote timing, text size, particles, grid opacity, progress bar, random order, and transition effects.
 - Light and dark control-center themes.
 - One-phrase-per-line quote pack creation.
+- Import and export of shareable preset files.
 - Tray menu with control center, reload, wallpaper folder, website, and exit.
 
 ## Requirements
@@ -87,8 +89,9 @@ Most Windows 11 machines already have WebView2 installed. If the app cannot star
 ## Build
 
 ```powershell
-dotnet restore .\src\SignalWall\SignalWall.csproj
+dotnet restore .\tests\SignalWall.Tests\SignalWall.Tests.csproj
 dotnet build .\src\SignalWall\SignalWall.csproj -c Release
+dotnet test .\tests\SignalWall.Tests\SignalWall.Tests.csproj -c Release
 ```
 
 ## Run
@@ -109,10 +112,11 @@ dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-c
 
 - Public alpha installers are unsigned and may be blocked by Windows Smart App Control.
 - The project is preparing an application to [SignPath Foundation](https://signpath.org/) for free open-source Authenticode signing.
-- Release artifacts include a SHA-256 checksum when built by the installer workflow.
-- CodeQL and CI run through GitHub Actions.
+- Releases include SHA-256 checksums, an SPDX SBOM, a machine-readable manifest, and a local verification script.
+- GitHub Actions signs build-provenance and SBOM attestations through Sigstore.
+- Automated tests, CodeQL, and CI run through GitHub Actions.
 - Dependabot tracks NuGet and GitHub Actions updates.
-- See [SECURITY.md](SECURITY.md), [docs/code-signing.md](docs/code-signing.md), and the [SignPath application draft](docs/signpath-application.md).
+- See [release verification](docs/release-verification.md), [SECURITY.md](SECURITY.md), [docs/code-signing.md](docs/code-signing.md), and the [SignPath application draft](docs/signpath-application.md).
 
 ## Contributing
 

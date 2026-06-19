@@ -14,6 +14,9 @@ const els = {
   notice: $("notice"),
   setupSummary: $("setupSummary"),
   themeToggleBtn: $("themeToggleBtn"),
+  importPresetBtn: $("importPresetBtn"),
+  exportPresetBtn: $("exportPresetBtn"),
+  presetFileInput: $("presetFileInput"),
   quoteSeconds: $("quoteSeconds"),
   quoteSecondsValue: $("quoteSecondsValue"),
   textScale: $("textScale"),
@@ -70,6 +73,8 @@ const colorFields = [
 ];
 
 const positionLabels = ["Left", "Middle", "Right"];
+const presetFormat = "signalwall-preset";
+const maxPresetBytes = 2 * 1024 * 1024;
 
 function escapeHtml(value) {
   return String(value || "")
@@ -126,6 +131,150 @@ function setPath(object, path, value) {
 
 function isHex(value) {
   return /^#[0-9a-f]{6}$/i.test(String(value || ""));
+}
+
+function isSafeColor(value) {
+  return /^(#[0-9a-f]{3,8}|rgba?\([\d\s.,%+-]+\))$/i.test(String(value || "").trim());
+}
+
+function safeText(value, fallback, maxLength) {
+  const text = String(value ?? "").trim();
+  return (text || fallback).slice(0, maxLength);
+}
+
+function safeColor(value, fallback) {
+  const color = String(value || "").trim();
+  return isSafeColor(color) ? color : fallback;
+}
+
+function safeThemeReference(value, fallback, validIds) {
+  const reference = String(value || "");
+  return validIds.has(reference) ? reference : fallback;
+}
+
+function normalizeImportedConfig(candidate) {
+  const source = candidate?.format === presetFormat ? candidate.config : candidate;
+  if (!source || typeof source !== "object" || Array.isArray(source)) {
+    throw new Error("This file does not contain a SignalWall preset.");
+  }
+  if (!Array.isArray(source.textThemes) || !source.textThemes.length) {
+    throw new Error("The preset needs at least one text theme.");
+  }
+  if (!Array.isArray(source.colorThemes) || !source.colorThemes.length) {
+    throw new Error("The preset needs at least one color theme.");
+  }
+
+  const textThemes = source.textThemes.slice(0, 50).map((theme, themeIndex, themes) => {
+    const label = safeText(theme?.label, `Text ${themeIndex + 1}`, 80);
+    const previous = themes.slice(0, themeIndex).map((item, index) => ({
+      id: safeText(item?.id, `text-${index + 1}`, 80)
+    }));
+    const id = uniqueId(safeText(theme?.id, label, 80), previous);
+    const quotes = Array.isArray(theme?.quotes) ? theme.quotes.slice(0, 500) : [];
+    return {
+      id,
+      label,
+      quotes: (quotes.length ? quotes : [{ text: "New quote", author: "Note" }]).map((quote) => ({
+        text: safeText(quote?.text, "New quote", 1000),
+        author: safeText(quote?.author, "", 160)
+      }))
+    };
+  });
+
+  const colorThemes = source.colorThemes.slice(0, 50).map((theme, themeIndex, themes) => {
+    const label = safeText(theme?.label, `Colors ${themeIndex + 1}`, 80);
+    const previous = themes.slice(0, themeIndex).map((item, index) => ({
+      id: safeText(item?.id, `colors-${index + 1}`, 80)
+    }));
+    const id = uniqueId(safeText(theme?.id, label, 80), previous);
+    const text = Array.isArray(theme?.text) ? theme.text : [];
+    const accents = Array.isArray(theme?.accents) ? theme.accents : [];
+    const particles = Array.isArray(theme?.particles) ? theme.particles : accents;
+    const background = theme?.background || {};
+    return {
+      id,
+      label,
+      text: [
+        safeColor(text[0], "#fff8ed"),
+        safeColor(text[1], "#f1cf94"),
+        safeColor(text[2], "#d5faf3")
+      ],
+      muted: safeColor(theme?.muted, "rgba(244,239,228,0.62)"),
+      accents: [
+        safeColor(accents[0], "#f0b35a"),
+        safeColor(accents[1], "#5fc4b8"),
+        safeColor(accents[2], "#d86c77")
+      ],
+      particles: [
+        safeColor(particles[0], "#f0b35a"),
+        safeColor(particles[1], "#5fc4b8"),
+        safeColor(particles[2], "#d86c77")
+      ],
+      background: {
+        top: safeColor(background.top, "#0a0b0c"),
+        middle: safeColor(background.middle, "#12100d"),
+        bottom: safeColor(background.bottom, "#081011"),
+        glowA: safeColor(background.glowA, "rgba(216,108,119,0.18)"),
+        glowB: safeColor(background.glowB, "rgba(95,196,184,0.16)"),
+        glowC: safeColor(background.glowC, "rgba(240,179,90,0.18)")
+      }
+    };
+  });
+
+  const sourceDefaults = source.defaults || {};
+  const sourceSettings = sourceDefaults.settings || {};
+  const textIds = new Set(textThemes.map((theme) => theme.id));
+  const colorIds = new Set(colorThemes.map((theme) => theme.id));
+  const firstText = textThemes[0].id;
+  const firstColor = colorThemes[0].id;
+  const screenOrder = Array.isArray(sourceDefaults.screenOrder)
+    ? sourceDefaults.screenOrder.map(Number).filter((value, index, values) =>
+      value >= 1 && value <= 3 && values.indexOf(value) === index)
+    : [];
+  [2, 3, 1].forEach((value) => {
+    if (!screenOrder.includes(value)) screenOrder.push(value);
+  });
+
+  const screenTextThemes = {};
+  const screenColorThemes = {};
+  [1, 2, 3].forEach((index) => {
+    screenTextThemes[`screen${index}`] = safeThemeReference(
+      sourceDefaults.screenTextThemes?.[`screen${index}`],
+      firstText,
+      textIds
+    );
+    screenColorThemes[`screen${index}`] = safeThemeReference(
+      sourceDefaults.screenColorThemes?.[`screen${index}`],
+      firstColor,
+      colorIds
+    );
+  });
+
+  return {
+    version: 1,
+    defaults: {
+      settings: {
+        quoteSeconds: clamp(sourceSettings.quoteSeconds, 30, 5, 300),
+        textScale: clamp(sourceSettings.textScale, 100, 60, 160),
+        particleAmount: clamp(sourceSettings.particleAmount, 65, 0, 120),
+        particleSpeed: clamp(sourceSettings.particleSpeed, 100, 0, 200),
+        gridOpacity: clamp(sourceSettings.gridOpacity, 46, 0, 100),
+        progressVisible: sourceSettings.progressVisible !== false,
+        randomOrder: sourceSettings.randomOrder !== false,
+        transitionEffect: normalizeTransitionEffect(sourceSettings.transitionEffect)
+      },
+      screenOrder: screenOrder.slice(0, 3),
+      quoteDisplayMode: Number(sourceDefaults.quoteDisplayMode) === 0 ? 0 : 1,
+      textThemeMode: Number(sourceDefaults.textThemeMode) === 0 ? 0 : 1,
+      colorThemeMode: Number(sourceDefaults.colorThemeMode) === 0 ? 0 : 1,
+      globalTextTheme: safeThemeReference(sourceDefaults.globalTextTheme, firstText, textIds),
+      globalColorTheme: safeThemeReference(sourceDefaults.globalColorTheme, firstColor, colorIds),
+      screenTextThemes,
+      screenColorThemes
+    },
+    textThemes,
+    colorThemes
+  };
 }
 
 function showNotice(message, type = "ok") {
@@ -546,6 +695,43 @@ async function reloadWallpaper() {
   showNotice(`Wallpaper reload sent at ${payload.reloadedAt}.`);
 }
 
+function exportPreset() {
+  readControlsToConfig();
+  const payload = {
+    format: presetFormat,
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    config: app.config
+  };
+  const blob = new Blob([`${JSON.stringify(payload, null, 2)}\n`], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const date = new Date().toISOString().slice(0, 10);
+  link.href = url;
+  link.download = `signalwall-preset-${date}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 0);
+  showNotice("Preset exported.");
+}
+
+async function importPreset(file) {
+  if (!file) return;
+  if (file.size > maxPresetBytes) {
+    throw new Error("Preset files must be smaller than 2 MB.");
+  }
+
+  const content = await file.text();
+  const parsed = JSON.parse(content);
+  app.config = normalizeImportedConfig(parsed);
+  app.activeTextTheme = 0;
+  app.activeColorTheme = 0;
+  app.dirty = true;
+  renderAll();
+  showNotice("Preset imported. Review it, then choose Save and apply.");
+}
+
 settingFields.forEach(([key]) => {
   els[key].addEventListener("input", handleChange);
 });
@@ -560,6 +746,18 @@ els.globalColorTheme.addEventListener("change", handleChange);
 
 els.themeToggleBtn.addEventListener("click", () => {
   setUiTheme(document.body.dataset.uiTheme === "light" ? "dark" : "light");
+});
+
+els.exportPresetBtn.addEventListener("click", exportPreset);
+els.importPresetBtn.addEventListener("click", () => els.presetFileInput.click());
+els.presetFileInput.addEventListener("change", async () => {
+  try {
+    await importPreset(els.presetFileInput.files?.[0]);
+  } catch (error) {
+    showNotice(error instanceof SyntaxError ? "The selected file is not valid JSON." : error.message, "error");
+  } finally {
+    els.presetFileInput.value = "";
+  }
 });
 
 els.textThemeSelect.addEventListener("change", () => {

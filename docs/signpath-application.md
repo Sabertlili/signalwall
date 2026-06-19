@@ -54,7 +54,7 @@ SignalWall is an independent, non-commercial open-source project. Its purpose is
 ## Before submission
 
 - [ ] CI and CodeQL are green on `main`.
-- [ ] Version 0.2 source and release workflow are public.
+- [x] Version 0.3 source and release workflow are public.
 - [ ] Repository homepage points to https://nestcells.com.
 - [ ] SECURITY.md and code-signing documentation are current.
 - [ ] Maintainer reviews SignPath Foundation terms.

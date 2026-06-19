@@ -7,7 +7,8 @@ SignalWall is a local Windows desktop app that hosts bundled HTML/CSS/JS wallpap
 | Version | Supported |
 | --- | --- |
 | `main` | Yes |
-| `v0.1.x` | Best effort |
+| `v0.3.x` | Yes |
+| `v0.2.x` | Best effort |
 
 ## Reporting a vulnerability
 
@@ -27,7 +28,8 @@ Include:
 
 - The public alpha installer is unsigned.
 - The recommended path is to review the source, build locally, and run from source.
-- Release binaries should be checked with `Get-AuthenticodeSignature` and `Get-FileHash`.
+- Release binaries include SHA-256 checksums, a verification script, an SPDX SBOM, and GitHub build-provenance attestations.
+- Release binaries should be checked with `Verify-SignalWallRelease.ps1` or `gh attestation verify`.
 - The app should not disable Windows security features.
 - Any future network behavior, auto-update behavior, or startup persistence must be documented before release.
 

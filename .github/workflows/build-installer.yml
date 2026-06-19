@@ -6,13 +6,17 @@ on:
       version:
         description: Release version without the v prefix
         required: true
-        default: 0.2.0
+        default: 0.3.0
   push:
     tags:
       - "v*"
 
 permissions:
+  actions: read
+  attestations: write
+  artifact-metadata: write
   contents: write
+  id-token: write
 
 jobs:
   build-release:
@@ -20,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -57,6 +61,21 @@ jobs:
           $portable = "./dist/SignalWallPortable-v$version-win-x64.zip"
           Compress-Archive -Path "$source/*" -DestinationPath $portable -Force
 
+      - name: Generate software bill of materials
+        uses: anchore/sbom-action@v0.24.0
+        with:
+          path: ./publish/win-x64-self-contained
+          format: spdx-json
+          output-file: ./dist/SignalWall-v${{ steps.version.outputs.version }}.spdx.json
+          artifact-name: SignalWall-v${{ steps.version.outputs.version }}-sbom
+          dependency-snapshot: true
+          upload-artifact: false
+          upload-release-assets: false
+
+      - name: Add release verifier
+        shell: pwsh
+        run: Copy-Item ./scripts/Verify-SignalWallRelease.ps1 ./dist/Verify-SignalWallRelease.ps1
+
       - name: Verify signatures
         shell: pwsh
         env:
@@ -75,7 +94,7 @@ jobs:
         shell: pwsh
         run: |
           $files = Get-ChildItem ./dist -File |
-            Where-Object { $_.Extension -in ".exe", ".zip" } |
+            Where-Object { $_.Extension -in ".exe", ".zip", ".json", ".ps1" } |
             Sort-Object Name
           $lines = foreach ($file in $files) {
             $hash = Get-FileHash -Algorithm SHA256 -Path $file.FullName
@@ -83,6 +102,58 @@ jobs:
           }
           $lines | Set-Content -Encoding utf8 ./dist/SHA256SUMS.txt
           Get-Content ./dist/SHA256SUMS.txt
+
+      - name: Generate release manifest
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          $tag = "${{ steps.version.outputs.tag }}"
+          $checksums = @{}
+          foreach ($line in Get-Content ./dist/SHA256SUMS.txt) {
+            if ($line -match "^(?<hash>[0-9a-f]{64})\s{2}(?<name>.+)$") {
+              $checksums[$Matches.name] = $Matches.hash
+            }
+          }
+
+          $installer = "./dist/SignalWallSetup-v$version-win-x64.exe"
+          $signature = Get-AuthenticodeSignature -FilePath $installer
+          $artifacts = Get-ChildItem ./dist -File |
+            Where-Object { $checksums.ContainsKey($_.Name) } |
+            Sort-Object Name |
+            ForEach-Object {
+              [ordered]@{
+                name = $_.Name
+                size = $_.Length
+                sha256 = $checksums[$_.Name]
+              }
+            }
+
+          $manifest = [ordered]@{
+            schemaVersion = 1
+            product = "SignalWall"
+            version = $version
+            tag = $tag
+            commit = "${{ github.sha }}"
+            repository = "${{ github.server_url }}/${{ github.repository }}"
+            workflowRun = "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            builtAtUtc = (Get-Date).ToUniversalTime().ToString("O")
+            platform = "windows"
+            runtime = "win-x64"
+            authenticodeStatus = $signature.Status.ToString()
+            artifacts = $artifacts
+          }
+          $manifest | ConvertTo-Json -Depth 6 | Set-Content -Encoding utf8 ./dist/release-manifest.json
+
+      - name: Attest release provenance
+        uses: actions/attest@v4.1.0
+        with:
+          subject-checksums: ./dist/SHA256SUMS.txt
+
+      - name: Attest portable-package SBOM
+        uses: actions/attest@v4.1.0
+        with:
+          subject-path: ./dist/SignalWallPortable-v${{ steps.version.outputs.version }}-win-x64.zip
+          sbom-path: ./dist/SignalWall-v${{ steps.version.outputs.version }}.spdx.json
 
       - name: Create or update GitHub release
         shell: pwsh
@@ -94,12 +165,45 @@ jobs:
           $assets = @(
             "./dist/SignalWallSetup-v$version-win-x64.exe",
             "./dist/SignalWallPortable-v$version-win-x64.zip",
-            "./dist/SHA256SUMS.txt"
+            "./dist/SignalWall-v$version.spdx.json",
+            "./dist/SHA256SUMS.txt",
+            "./dist/release-manifest.json",
+            "./dist/Verify-SignalWallRelease.ps1"
           )
+
+          $signature = Get-AuthenticodeSignature -FilePath "./dist/SignalWallSetup-v$version-win-x64.exe"
+          $signatureNote = if ($signature.Status -eq "Valid") {
+            "The Windows binaries are Authenticode signed."
+          } else {
+            "The Windows binaries are currently unsigned. Do not disable Windows security to run them."
+          }
+          @"
+          ## SignalWall $tag
+
+          A calm, open-source live wallpaper host for Windows with a built-in multi-monitor control center.
+
+          ### Included
+
+          - Windows installer
+          - Portable Windows package
+          - SHA-256 checksums
+          - SPDX software bill of materials
+          - Machine-readable release manifest
+          - Local PowerShell verification script
+          - GitHub build-provenance and SBOM attestations
+
+          ### Verify
+
+          Run ``.\Verify-SignalWallRelease.ps1`` beside the downloaded artifacts, or verify GitHub provenance with:
+
+          ``gh attestation verify <artifact> -R Sabertlili/signalwall``
+
+          $signatureNote
+          "@ | Set-Content -Encoding utf8 ./dist/RELEASE_NOTES.md
 
           gh release view $tag *> $null
           if ($LASTEXITCODE -ne 0) {
-            gh release create $tag @assets --title "SignalWall $tag" --generate-notes
+            gh release create $tag @assets --title "SignalWall $tag" --notes-file ./dist/RELEASE_NOTES.md
           } else {
             gh release upload $tag @assets --clobber
           }

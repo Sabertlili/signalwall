@@ -6,6 +6,7 @@ SignalWall is early, source-first, and intentionally small. Contributions are we
 
 - Improve the README, screenshots, or install prompts.
 - Add quote packs, theme presets, or transition presets.
+- Share a preset file that demonstrates a useful desktop workflow.
 - Improve multi-monitor behavior on unusual layouts.
 - Add tests around screen-slot mapping and configuration parsing.
 - Report installation friction with clear Windows version and security-tool details.
@@ -26,6 +27,7 @@ dotnet run --project .\src\SignalWall\SignalWall.csproj -c Release
 - Explain the user-facing behavior change.
 - Include screenshots or a short recording for UI changes.
 - Run `dotnet build .\src\SignalWall\SignalWall.csproj -c Release`.
+- Run `dotnet test .\tests\SignalWall.Tests\SignalWall.Tests.csproj -c Release`.
 - Do not add telemetry, hidden network calls, or startup persistence without explicit discussion.
 - Do not disable Microsoft Defender, Smart App Control, browser protection, or any Windows security feature.
 

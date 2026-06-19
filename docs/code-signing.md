@@ -56,5 +56,5 @@ You can also pass signing inputs locally:
 Verify the installer:
 
 ```powershell
-Get-AuthenticodeSignature .\dist\SignalWallSetup-v0.2.0-win-x64.exe
+Get-AuthenticodeSignature .\dist\SignalWallSetup-v0.3.0-win-x64.exe
 ```

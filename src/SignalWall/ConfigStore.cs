@@ -7,6 +7,8 @@ namespace SignalWall;
 
 public sealed partial class ConfigStore
 {
+    private const int MaxConfigurationBytes = 2 * 1024 * 1024;
+    private static readonly int[] DefaultScreenOrder = [2, 3, 1];
     private readonly string configPath;
 
     public ConfigStore(string webRoot)
@@ -39,10 +41,16 @@ public sealed partial class ConfigStore
             throw new InvalidDataException("SignalWall configuration must be a JSON object.");
         }
 
+        ValidateConfiguration(config);
+
         var json = JsonSerializer.Serialize(config, new JsonSerializerOptions
         {
             WriteIndented = true
         });
+        if (Encoding.UTF8.GetByteCount(json) > MaxConfigurationBytes)
+        {
+            throw new InvalidDataException("SignalWall configuration is larger than 2 MB.");
+        }
 
         var temporaryPath = $"{configPath}.tmp";
         File.WriteAllText(
@@ -54,21 +62,68 @@ public sealed partial class ConfigStore
 
     public IReadOnlyList<int> ReadScreenOrder()
     {
-        var order = Read()["defaults"]?["screenOrder"]?.AsArray()
-            .Select(item => item?.GetValue<int>() ?? 0)
-            .Where(item => item is >= 1 and <= 3)
-            .Distinct()
-            .ToList() ?? [];
-
-        foreach (var fallback in new[] { 2, 3, 1 })
+        try
         {
-            if (!order.Contains(fallback))
-            {
-                order.Add(fallback);
-            }
-        }
+            var order = Read()["defaults"]?["screenOrder"]?.AsArray()
+                .Select(item => item?.GetValue<int>() ?? 0)
+                .Where(item => item is >= 1 and <= 3)
+                .Distinct()
+                .ToList() ?? [];
 
-        return order.Take(3).ToArray();
+            foreach (var fallback in DefaultScreenOrder)
+            {
+                if (!order.Contains(fallback))
+                {
+                    order.Add(fallback);
+                }
+            }
+
+            return order.Take(3).ToArray();
+        }
+        catch (Exception exception) when (
+            exception is IOException or
+            InvalidDataException or
+            JsonException or
+            InvalidOperationException)
+        {
+            return DefaultScreenOrder;
+        }
+    }
+
+    private static void ValidateConfiguration(JsonElement config)
+    {
+        RequireObject(config, "defaults");
+        RequireNonEmptyArray(config, "textThemes");
+        RequireNonEmptyArray(config, "colorThemes");
+
+        foreach (var theme in config.GetProperty("textThemes").EnumerateArray())
+        {
+            if (theme.ValueKind != JsonValueKind.Object)
+            {
+                throw new InvalidDataException("Every text theme must be an object.");
+            }
+
+            RequireNonEmptyArray(theme, "quotes");
+        }
+    }
+
+    private static void RequireObject(JsonElement parent, string propertyName)
+    {
+        if (!parent.TryGetProperty(propertyName, out var property) ||
+            property.ValueKind != JsonValueKind.Object)
+        {
+            throw new InvalidDataException($"SignalWall configuration requires an object named '{propertyName}'.");
+        }
+    }
+
+    private static void RequireNonEmptyArray(JsonElement parent, string propertyName)
+    {
+        if (!parent.TryGetProperty(propertyName, out var property) ||
+            property.ValueKind != JsonValueKind.Array ||
+            property.GetArrayLength() == 0)
+        {
+            throw new InvalidDataException($"SignalWall configuration requires a non-empty array named '{propertyName}'.");
+        }
     }
 
     [GeneratedRegex(

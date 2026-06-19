@@ -5,6 +5,7 @@ What changed?
 ## Validation
 
 - [ ] `dotnet build .\src\SignalWall\SignalWall.csproj -c Release`
+- [ ] `dotnet test .\tests\SignalWall.Tests\SignalWall.Tests.csproj -c Release`
 - [ ] UI changes include screenshot or short recording
 - [ ] Documentation updated if behavior changed
 
