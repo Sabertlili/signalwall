@@ -1,6 +1,6 @@
-# Installation assistée depuis la source
+# Installation source vérifiable par un agent
 
-SignalWall est gratuit, open source et encore jeune. L’installateur Windows public est actuellement **non signé**. Le chemin le plus prudent est donc de demander à un agent local comme Codex, Claude Code ou un équivalent d’inspecter le dépôt, de compiler depuis le code source, puis de présenter un rapport de sécurité avant de lancer quoi que ce soit.
+SignalWall est gratuit, open source et encore jeune. L’installateur Windows public est actuellement **non signé**. Le parcours recommandé, vérifiable par un agent, consiste à demander à Codex, Claude Code ou un équivalent d’inspecter le dépôt, de compiler depuis le code source, puis de présenter un rapport de sécurité avant de lancer quoi que ce soit.
 
 Dépôt : `https://github.com/Sabertlili/signalwall`
 

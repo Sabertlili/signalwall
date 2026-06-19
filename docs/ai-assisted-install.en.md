@@ -1,6 +1,6 @@
-# AI-assisted source installation
+# Agent-verifiable source installation
 
-SignalWall is free, open source, and early. The public Windows installer is currently **unsigned**, so the safest path is to have a local coding agent inspect the repository, build from source, and explain the security findings before anything runs.
+SignalWall is free, open source, and early. The public Windows installer is currently **unsigned**, so the recommended agent-verifiable path is to have a local coding agent inspect the repository, build from source, and explain the security findings before anything runs.
 
 Repository: `https://github.com/Sabertlili/signalwall`
 

@@ -27,13 +27,13 @@ SignalWall
 Tagline:
 
 ```text
-Live wallpapers with a built-in multi-screen control center
+Typography-first live wallpapers for every Windows screen
 ```
 
 Short description:
 
 ```text
-SignalWall is a free, open-source Windows live wallpaper app for calm multi-monitor desktops. Version 0.2 adds a built-in control center, real per-screen themes, quote-pack editing, screen ordering, and a transparent source-first install path.
+SignalWall turns every Windows monitor into a living typography surface. Give each screen its own quotes, themes, timing, and motion, then share the setup as a preset. Free, open source, telemetry-free, and agent-verifiable.
 ```
 
 Pricing:
@@ -45,7 +45,7 @@ Free
 Status:
 
 ```text
-Version 0.2 / open-source alpha
+Version 0.3 / open-source alpha
 ```
 
 Suggested topics:
@@ -54,6 +54,7 @@ Suggested topics:
 Productivity
 Open Source
 Design Tools
+Windows
 ```
 
 Extra links:
@@ -61,21 +62,21 @@ Extra links:
 ```text
 Website: https://nestcells.com
 GitHub: https://github.com/Sabertlili/signalwall
-Source-first install prompt: https://github.com/Sabertlili/signalwall/blob/main/docs/ai-assisted-install.en.md
+Agent-verifiable install prompt: https://github.com/Sabertlili/signalwall/blob/main/docs/ai-assisted-install.en.md
 ```
 
 ## Assets
 
-Thumbnail:
+Logo / thumbnail:
 
 ```text
-docs/launch-assets/product-hunt-thumbnail-v2.png
+docs/launch-assets/product-hunt-logo-v3.png
 ```
 
 Gallery:
 
 ```text
-docs/launch-assets/product-hunt-gallery-1-hero-v2.png
+docs/launch-assets/product-hunt-gallery-1-positioning-v3.png
 docs/launch-assets/product-hunt-gallery-2-demo-v2.png
 docs/launch-assets/product-hunt-gallery-3-control-center-v2.png
 docs/launch-assets/product-hunt-gallery-4-install-v2.png
@@ -84,28 +85,30 @@ docs/launch-assets/product-hunt-gallery-4-install-v2.png
 ## First comment
 
 ```text
-I built SignalWall because my desktop was becoming visual noise.
+I built SignalWall around a simple idea: the desktop should carry thought, not noise.
 
-Most live wallpapers are built to impress for a few seconds. I wanted something quiet enough to keep on screen all day: calm typography, subtle motion, and per-monitor behavior that works with real Windows setups.
+Most wallpaper engines are image-first or video-first. SignalWall is typography-first. Every Windows monitor becomes a living surface for quotes and ideas, with motion restrained enough to keep on screen all day.
 
-The first launch taught me that a polished wallpaper was not enough. Version 0.2 now includes the control center directly inside SignalWall. It lets you choose same or different quotes per screen, create quote packs, edit text and color themes, tune timing and motion, and map the physical screen order from one place.
+You can run one thought across every display or give each screen its own quote pack, text theme, color theme, timing, particles, progress, and transition. The control center maps the physical left, center, and right screens, and version 0.3 exports the complete workspace as a shareable preset.
 
-The project is open source and currently alpha. Windows Smart App Control can block unsigned binaries, so the app never asks users to disable security. The recommended install path remains source-first while the project prepares a SignPath Foundation application for free open-source signing.
+The distribution model is different too. SignalWall is agent-verifiable: Codex, Claude Code, or another local coding agent can inspect the public source, review dependencies and workflows, build locally, and explain security findings before anything runs. Releases also publish SHA-256 checksums, an SPDX SBOM, a manifest, and signed GitHub build provenance.
+
+To be precise about the positioning: quote wallpapers already exist, multi-monitor wallpaper engines already exist, and many Product Hunt products work with coding agents. I could not find another Windows live wallpaper product that combines typography-first design, independent per-screen quote logic, shareable whole-workspace presets, and an agent-verifiable source install. That combination is the category SignalWall is trying to define.
 
 I would love feedback on:
 
-- the multi-monitor workflow;
-- the source-first install path;
-- the quote/theme customization model;
+- whether “typography-first live wallpaper” describes the category clearly;
+- the independent multi-screen workflow;
+- the agent-verifiable distribution model;
 - whether the product feels calm enough to live on a daily desktop.
 ```
 
 ## Short share post
 
 ```text
-I launched SignalWall, a free open-source live wallpaper app for calm Windows multi-monitor desks.
+I launched SignalWall: typography-first live wallpapers for Windows.
 
-It starts with Quote Signal: subtle motion, quote themes, per-screen controls, color themes, timing, and a source-first install path so people can inspect and build locally before running the alpha.
+Every screen can carry its own quotes, themes, timing, and motion. Complete setups are shareable as presets. The project is free, open source, telemetry-free, and agent-verifiable through Codex or Claude Code.
 
 https://nestcells.com
 https://github.com/Sabertlili/signalwall
@@ -116,7 +119,7 @@ https://github.com/Sabertlili/signalwall
 Title:
 
 ```text
-Show HN: SignalWall - open-source live wallpapers for Windows multi-monitor desks
+Show HN: SignalWall – typography-first live wallpapers for Windows
 ```
 
 URL:
@@ -128,11 +131,11 @@ https://github.com/Sabertlili/signalwall
 Comment:
 
 ```text
-I built this because most live wallpapers felt too loud for a desktop that stays open all day.
+I built this because most live wallpapers are image-first or video-first, while the desktop is also a useful surface for thought.
 
-SignalWall is a small open-source Windows app that creates one WebView2 wallpaper window per monitor. The first bundled wallpaper, Quote Signal, focuses on calm typography, subtle motion, per-screen quote behavior, themes, timing, and monitor order.
+SignalWall is a small open-source Windows app that creates one WebView2 wallpaper window per monitor. It is typography-first: quotes, hierarchy, per-screen logic, themes, timing, transitions, and physical monitor order are controlled from one place. Version 0.3 can export the complete setup as a shareable preset.
 
-The public installer is currently unsigned, so the README recommends a source-first install path: inspect the code, build locally, and review security findings before running it.
+The public installer is currently unsigned, so the README recommends an agent-verifiable install path: let Codex, Claude Code, or another local coding agent inspect the code, build locally, and review security findings before running it. Releases include hashes, an SPDX SBOM, and signed build provenance.
 
 Feedback on the architecture, security notes, and multi-monitor workflow would be useful.
 ```

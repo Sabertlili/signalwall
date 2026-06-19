@@ -9,8 +9,10 @@ $repoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $assetRoot = Join-Path $repoRoot "src\SignalWall\assets"
 $pngPath = Join-Path $assetRoot "SignalWall.png"
 $icoPath = Join-Path $assetRoot "SignalWall.ico"
+$productHuntPath = Join-Path $repoRoot "docs\launch-assets\product-hunt-logo-v3.png"
 
 New-Item -ItemType Directory -Force -Path $assetRoot | Out-Null
+New-Item -ItemType Directory -Force -Path (Split-Path -Parent $productHuntPath) | Out-Null
 
 $bitmap = [System.Drawing.Bitmap]::new($Size, $Size)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
@@ -46,6 +48,16 @@ $graphics.DrawString("S", $font, $textBrush, [System.Drawing.RectangleF]::new(24
 
 $bitmap.Save($pngPath, [System.Drawing.Imaging.ImageFormat]::Png)
 
+$productHuntBitmap = [System.Drawing.Bitmap]::new(240, 240)
+$productHuntGraphics = [System.Drawing.Graphics]::FromImage($productHuntBitmap)
+$productHuntGraphics.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
+$productHuntGraphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+$productHuntGraphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+$productHuntGraphics.DrawImage($bitmap, 0, 0, 240, 240)
+$productHuntBitmap.Save($productHuntPath, [System.Drawing.Imaging.ImageFormat]::Png)
+$productHuntGraphics.Dispose()
+$productHuntBitmap.Dispose()
+
 $pngBytes = [System.IO.File]::ReadAllBytes($pngPath)
 $stream = [System.IO.File]::Create($icoPath)
 $writer = [System.IO.BinaryWriter]::new($stream)
@@ -74,3 +86,4 @@ $bitmap.Dispose()
 
 Write-Host "Generated $pngPath"
 Write-Host "Generated $icoPath"
+Write-Host "Generated $productHuntPath"

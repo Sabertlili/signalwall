@@ -141,19 +141,27 @@ function Write-ThumbnailHtml {
 $wallpaperHtml = Join-Path $tempDir "wallpaper.html"
 $controlHtml = Join-Path $tempDir "control.html"
 $multiHtml = Join-Path $tempDir "multi.html"
+$positioningHtml = Join-Path $tempDir "positioning.html"
 $thumbHtml = Join-Path $tempDir "thumbnail.html"
 
 Write-WrapperHtml -SvgPath (Join-Path $sourceAssets "quote-signal-capture.svg") -OutputPath $wallpaperHtml -Fit "cover"
 Write-WrapperHtml -SvgPath (Join-Path $sourceAssets "customization-workflow.svg") -OutputPath $controlHtml -Fit "cover"
 Write-WrapperHtml -SvgPath (Join-Path $sourceAssets "screen-layout-modes.svg") -OutputPath $multiHtml -Fit "contain"
+Write-WrapperHtml -SvgPath (Join-Path $sourceAssets "product-hunt-positioning-v3.svg") -OutputPath $positioningHtml -Fit "cover"
 Write-ThumbnailHtml -OutputPath $thumbHtml
 
 Capture-Chrome -HtmlPath $wallpaperHtml -OutputPath (Join-Path $assetsDir "product-hunt-gallery-1-wallpaper.png") -Width 1270 -Height 760
 Capture-Chrome -HtmlPath $controlHtml -OutputPath (Join-Path $assetsDir "product-hunt-gallery-2-control-center.png") -Width 1270 -Height 760
 Capture-Chrome -HtmlPath $multiHtml -OutputPath (Join-Path $assetsDir "product-hunt-gallery-3-multi-monitor.png") -Width 1270 -Height 760
+Capture-Chrome -HtmlPath $positioningHtml -OutputPath (Join-Path $assetsDir "product-hunt-gallery-1-positioning-v3.png") -Width 1270 -Height 760
 Capture-Chrome -HtmlPath $thumbHtml -OutputPath (Join-Path $assetsDir "product-hunt-thumbnail.png") -Width 240 -Height 240
 
-Remove-Item -LiteralPath $tempDir -Recurse -Force
+$resolvedTempDir = (Resolve-Path -LiteralPath $tempDir).Path
+$resolvedTempRoot = (Resolve-Path -LiteralPath $env:TEMP).Path.TrimEnd('\')
+if (-not $resolvedTempDir.StartsWith($resolvedTempRoot + '\', [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw "Refusing to remove unexpected temporary directory: $resolvedTempDir"
+}
+Remove-Item -LiteralPath $resolvedTempDir -Recurse -Force
 
 Get-ChildItem -LiteralPath $assetsDir -Filter "*.png" |
     Select-Object Name, Length |

@@ -13,20 +13,21 @@ English: [README.md](README.md)
 [![Licence MIT](https://img.shields.io/badge/licence-MIT-f6efe2.svg)](LICENSE)
 [![Windows](https://img.shields.io/badge/plateforme-Windows-98d6c8.svg)](#prérequis)
 
-SignalWall est une application Windows gratuite et open source pour des fonds d’écran dynamiques calmes, intentionnels et multi-écrans.
+SignalWall est un système Windows gratuit et open source de fonds d’écran dynamiques centrés sur la typographie. Chaque moniteur devient une surface indépendante pour afficher des citations, des idées et un mouvement discret.
 
-La version 0.3 ajoute l’import et l’export de presets partageables, des tests automatisés, un SBOM SPDX et une provenance de build GitHub signée cryptographiquement. SignalWall crée une fenêtre WebView2 sans bordure par écran et rassemble tous les paramètres dans la barre système.
+La version 0.3 ajoute l’import et l’export de presets partageables, des tests automatisés, un SBOM SPDX et une provenance de build GitHub signée cryptographiquement. SignalWall crée une fenêtre WebView2 sans bordure par écran et rassemble toute la configuration multi-écran dans un seul centre de contrôle.
 
-[Site web](https://nestcells.com) | [Dernière version](https://github.com/Sabertlili/signalwall/releases/latest) | [Vérifier une release](docs/release-verification.md) | [Prompt d’installation depuis la source](docs/ai-assisted-install.fr.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md)
+[Site web](https://nestcells.com) | [Dernière version](https://github.com/Sabertlili/signalwall/releases/latest) | [Vérifier une release](docs/release-verification.md) | [Prompt d’installation vérifiable par un agent](docs/ai-assisted-install.fr.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md)
 
 ## Pourquoi ce projet existe
 
-La plupart des fonds d’écran dynamiques sont conçus pour impressionner pendant cinq secondes. SignalWall est conçu pour l’écran que vous regardez toute la journée.
+La plupart des fonds d’écran dynamiques sont centrés sur l’image ou la vidéo. SignalWall est centré sur la typographie : les mots, la hiérarchie, le rythme et la relation entre les écrans constituent le produit.
 
-- Typographie calme au lieu de bruit visuel.
-- Multi-écran traité comme un vrai workflow.
-- Citations et thèmes personnalisables sans toucher au code.
-- Installation depuis la source tant que l’installateur alpha n’est pas signé.
+- Affichez la même pensée partout ou attribuez un rôle différent à chaque écran.
+- Contrôlez les citations, les thèmes de texte et de couleur, le rythme, le mouvement et l’ordre physique des écrans.
+- Créez des packs complets avec une phrase par ligne.
+- Exportez tout l’espace de travail dans un preset partageable.
+- Utilisez un parcours source vérifiable par un agent tant que les binaires Windows publics ne sont pas signés.
 
 ## Aperçu produit
 
@@ -47,11 +48,11 @@ La plupart des fonds d’écran dynamiques sont conçus pour impressionner penda
 
 </details>
 
-## Installation prudente avec Codex ou Claude Code
+## Installation vérifiable par Codex ou Claude Code
 
-Le projet est gratuit et open source. Les binaires publics sont actuellement non signés et Windows Smart App Control peut les bloquer sur les systèmes stricts. Ne désactivez pas la sécurité Windows. Le chemin recommandé est de demander à Codex, Claude Code ou un agent équivalent d’inspecter le code source, de compiler localement, puis de présenter un rapport de sécurité avant de lancer l’application.
+Le projet est gratuit et open source. Les binaires publics sont actuellement non signés et Windows Smart App Control peut les bloquer sur les systèmes stricts. Ne désactivez pas la sécurité Windows. Le parcours recommandé est vérifiable par un agent : demandez à Codex, Claude Code ou un équivalent d’inspecter le code source, de compiler localement, puis de présenter un rapport de sécurité avant de lancer l’application.
 
-**[Copier le prompt d’installation depuis la source](docs/ai-assisted-install.fr.md)**
+**[Copier le prompt d’installation vérifiable par un agent](docs/ai-assisted-install.fr.md)**
 
 Ce prompt demande à l’agent de :
 
@@ -120,7 +121,7 @@ dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-c
 
 ## Contribuer
 
-SignalWall reste petit volontairement. Les bonnes contributions améliorent la clarté, la sécurité, le multi-écran, la finition du wallpaper ou le chemin d’installation depuis la source.
+SignalWall reste petit volontairement. Les bonnes contributions améliorent la clarté, la sécurité, le multi-écran, la typographie, la finition du fond d’écran ou le parcours d’installation vérifiable par un agent.
 
 Commencez par [CONTRIBUTING.md](CONTRIBUTING.md), [ROADMAP.md](ROADMAP.md) et [ARCHITECTURE.md](ARCHITECTURE.md).
 

@@ -24,8 +24,8 @@
   <rect width="1280" height="720" fill="url(#grid)"/>
   <g font-family="Inter, Segoe UI, Arial, sans-serif">
     <text x="64" y="86" fill="#f6efe2" font-size="26" font-weight="820">SIGNALWALL BY NESTCELLS</text>
-    <text x="64" y="176" fill="#fff8ed" font-size="82" font-weight="820">Calm live wallpapers</text>
-    <text x="64" y="226" fill="#bdb6aa" font-size="27" font-weight="650">Open-source, multi-monitor, source-first Windows wallpaper app.</text>
+    <text x="64" y="176" fill="#fff8ed" font-size="82" font-weight="820">Typography-first wallpapers</text>
+    <text x="64" y="226" fill="#bdb6aa" font-size="27" font-weight="650">Per-screen ideas, shareable presets, agent-verifiable source.</text>
 
     <g transform="translate(64 292)">
       <rect width="448" height="304" rx="12" fill="#0a0c0a" stroke="#f6efe2" stroke-opacity=".16"/>

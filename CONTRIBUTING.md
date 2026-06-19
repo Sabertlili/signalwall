@@ -1,6 +1,6 @@
 # Contributing to SignalWall
 
-SignalWall is early, source-first, and intentionally small. Contributions are welcome when they keep the app calm, inspectable, and useful on real Windows desktops.
+SignalWall is early, agent-verifiable, and intentionally small. Contributions are welcome when they keep the app calm, inspectable, and useful on real Windows desktops.
 
 ## Good first contributions
 

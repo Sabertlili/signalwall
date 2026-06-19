@@ -2,29 +2,29 @@
 
 Utilisez cette page pour partager SignalWall sur Product Hunt, Hacker News, Reddit, LinkedIn ou X.
 
-## Phrase courte
+## Catégorie
 
-SignalWall est une application Windows gratuite et open source pour des fonds d’écran dynamiques calmes, intentionnels et multi-écrans.
+Des fonds d’écran dynamiques centrés sur la typographie pour Windows.
 
 ## Description courte
 
-SignalWall transforme le bureau Windows en système de fond d’écran à citations personnalisables. Le projet est open source, pensé pour le multi-écran, et recommande une installation depuis la source pour permettre à chacun d’inspecter le code avant de lancer l’application.
+SignalWall transforme chaque moniteur Windows en une surface typographique vivante. Attribuez à chaque écran ses citations, ses thèmes, son rythme et son mouvement, puis exportez toute la configuration dans un preset partageable.
 
 ## Histoire
 
-La plupart des fonds d’écran dynamiques sont conçus pour impressionner pendant cinq secondes. SignalWall est conçu pour l’écran que vous regardez toute la journée. Le mouvement reste subtil, les citations sont faciles à personnaliser, et le multi-écran est traité comme un vrai workflow.
+La plupart des fonds d’écran dynamiques sont centrés sur l’image ou la vidéo. SignalWall est centré sur la typographie. Les mots deviennent le médium visuel, la logique multi-écran est traitée comme une fonction essentielle et le mouvement reste assez discret pour accompagner toute une journée.
 
-Le projet est aussi volontairement transparent. L’installateur alpha actuel n’est pas signé, donc le chemin recommandé est de demander à Codex, Claude Code ou un autre agent local d’inspecter le dépôt, de compiler localement, puis de présenter un rapport de sécurité avant lancement.
+Le projet est aussi volontairement transparent. Son parcours d’installation vérifiable par un agent permet à Codex, Claude Code ou un équivalent d’inspecter le dépôt, de compiler localement et de présenter un rapport de sécurité avant lancement. Les releases incluent aussi des empreintes, un SBOM SPDX, un manifeste et une provenance de build signée.
 
 ## Post de lancement
 
-J’ai créé SignalWall parce que mon bureau devenait du bruit visuel.
+J’ai créé SignalWall autour d’une idée simple : le bureau doit transmettre une pensée, pas produire du bruit.
 
-C’est une petite application Windows open source pour des fonds d’écran dynamiques multi-écrans. Le premier wallpaper inclus, Quote Signal, affiche une typographie calme, du mouvement subtil, des thèmes de citations, des thèmes couleur, des réglages par écran et une seule surface de contrôle.
+La plupart des moteurs de fond d’écran sont centrés sur l’image ou la vidéo. SignalWall est centré sur la typographie : chaque moniteur Windows devient une surface vivante pour des citations et des idées. Affichez la même pensée partout ou attribuez à chaque écran son pack, son thème de texte, son thème de couleur, son rythme et sa transition.
 
-L’installateur alpha n’est pas signé, donc le projet est source-first : le chemin recommandé demande à Codex, Claude Code ou un autre agent local d’inspecter le repo, de compiler localement et d’expliquer les conclusions de sécurité avant toute exécution.
+Les configurations complètes s’exportent dans des presets partageables. Le projet est gratuit, sous licence MIT, sans télémétrie et vérifiable par un agent : Codex ou Claude Code peut inspecter le dépôt public, compiler localement et expliquer ses conclusions de sécurité avant toute exécution.
 
-J’aimerais avoir du feedback sur le workflow multi-écran, le système de citations/thèmes et le chemin d’installation depuis la source.
+J’aimerais recevoir des retours sur cette catégorie centrée sur la typographie, le workflow par écran et ce modèle de distribution vérifiable par un agent.
 
 ## Liens
 
@@ -35,4 +35,4 @@ J’aimerais avoir du feedback sur le workflow multi-écran, le système de cita
 
 ## Tags suggérés
 
-`windows`, `open-source`, `live-wallpaper`, `multi-monitor`, `productivity`, `desktop-app`, `webview2`, `dotnet`
+`windows`, `open-source`, `typography`, `live-wallpaper`, `multi-monitor`, `productivity`, `desktop-app`, `webview2`, `dotnet`

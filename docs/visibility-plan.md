@@ -6,9 +6,9 @@ This is the recommended order for getting SignalWall seen without making claims 
 
 Use `docs/product-hunt-submission.md`.
 
-Goal: create a launch page or scheduled launch draft with a clean website, GitHub link, source-first install positioning, and three gallery assets.
+Goal: maintain a launch page with a clean website, GitHub link, typography-first positioning, an agent-verifiable install path, and a coherent gallery.
 
-Positioning: a calm, open-source Windows live wallpaper app for multi-monitor desktops.
+Positioning: typography-first live wallpapers for Windows, with independent screen logic, shareable presets, and agent-verifiable distribution.
 
 Do not ask for upvotes. Ask for feedback on the workflow, safety model, and customization.
 
@@ -40,11 +40,11 @@ Keep the repository launch-ready:
 - release notes should mention the unsigned alpha clearly;
 - screenshots should appear before detailed docs;
 - CI and CodeQL badges should stay visible;
-- the source-first install prompt should stay one click away from the README;
+- the agent-verifiable install prompt should stay one click away from the README;
 - issues should be enabled for feedback.
 
 ## 5. Social post
 
 Use the short share post from `docs/product-hunt-submission.md`.
 
-Best angle: not "another live wallpaper", but "a quieter desktop surface for people with multiple monitors."
+Best angle: not "another video wallpaper", but "a typography-first surface where every screen can carry a different thought."

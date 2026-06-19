@@ -13,20 +13,21 @@ Français: [README.fr.md](README.fr.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f6efe2.svg)](LICENSE)
 [![Windows](https://img.shields.io/badge/platform-Windows-98d6c8.svg)](#requirements)
 
-SignalWall is a free, open-source Windows live wallpaper app for calm, intentional multi-monitor desktops.
+SignalWall is a free, open-source, typography-first live wallpaper system for Windows. It turns every monitor into an independent surface for quotes, ideas, and calm motion.
 
-Version 0.3 adds shareable preset import/export, automated configuration tests, SPDX SBOMs, and cryptographically signed GitHub build provenance. SignalWall creates one borderless WebView2 wallpaper window per monitor and keeps every setting in the app tray.
+Version 0.3 adds shareable preset import/export, automated configuration tests, SPDX SBOMs, and cryptographically signed GitHub build provenance. SignalWall creates one borderless WebView2 wallpaper window per monitor and keeps the complete multi-screen setup in one control center.
 
-[Website](https://nestcells.com) | [Latest release](https://github.com/Sabertlili/signalwall/releases/latest) | [Verify a release](docs/release-verification.md) | [Source-first install prompt](docs/ai-assisted-install.en.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md)
+[Website](https://nestcells.com) | [Latest release](https://github.com/Sabertlili/signalwall/releases/latest) | [Verify a release](docs/release-verification.md) | [Agent-verifiable install prompt](docs/ai-assisted-install.en.md) | [Roadmap](ROADMAP.md) | [Architecture](ARCHITECTURE.md)
 
 ## Why it exists
 
-Most live wallpapers are designed to impress for five seconds. SignalWall is designed for the screen you stare at all day.
+Most live wallpapers are image-first or video-first. SignalWall is typography-first: the words, hierarchy, rhythm, and relationship between screens are the product.
 
-- Calm typography instead of visual noise.
-- Multi-monitor behavior as a first-class workflow.
-- Quote and theme systems that can be personalized without touching code.
-- A source-first install path while the alpha installer is unsigned.
+- Run one thought across every display or give each screen its own role.
+- Control quotes, text themes, color themes, timing, motion, and physical screen order.
+- Create complete quote packs with one phrase per line.
+- Export the entire workspace as a shareable preset.
+- Use an agent-verifiable source workflow while public Windows binaries remain unsigned.
 
 ## Product preview
 
@@ -47,11 +48,11 @@ Most live wallpapers are designed to impress for five seconds. SignalWall is des
 
 </details>
 
-## Install safely with Codex or Claude Code
+## Agent-verifiable installation with Codex or Claude Code
 
-SignalWall is free and open source. Public binaries are currently unsigned, and Windows Smart App Control can block them on strict systems. Do not disable Windows security. The recommended path is to ask Codex, Claude Code, or another local coding agent to inspect the source, build locally, and report security findings before launching the app.
+SignalWall is free and open source. Public binaries are currently unsigned, and Windows Smart App Control can block them on strict systems. Do not disable Windows security. The recommended path is agent-verifiable: ask Codex, Claude Code, or another local coding agent to inspect the source, build locally, and report security findings before launching the app.
 
-**[Copy the AI-assisted source install prompt](docs/ai-assisted-install.en.md)**
+**[Copy the agent-verifiable source install prompt](docs/ai-assisted-install.en.md)**
 
 That prompt tells the agent to:
 
@@ -120,7 +121,7 @@ dotnet publish .\src\SignalWall\SignalWall.csproj -c Release -r win-x64 --self-c
 
 ## Contributing
 
-SignalWall is small on purpose. Good contributions improve clarity, safety, multi-monitor behavior, wallpaper polish, or the source-first install path.
+SignalWall is small on purpose. Good contributions improve clarity, safety, multi-monitor behavior, typography, wallpaper polish, or the agent-verifiable install path.
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md), [ROADMAP.md](ROADMAP.md), and [ARCHITECTURE.md](ARCHITECTURE.md).
 

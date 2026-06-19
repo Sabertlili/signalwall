@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1270" height="760" viewBox="0 0 1270 760" role="img" aria-labelledby="title desc">
+  <title id="title">SignalWall product positioning</title>
+  <desc id="desc">Typography-first live wallpapers for Windows with independent screens, shareable presets, and agent-verifiable source.</desc>
+  <defs>
+    <linearGradient id="text" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fff8ed"/>
+      <stop offset="0.58" stop-color="#e7c174"/>
+      <stop offset="1" stop-color="#98d6c8"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#17100f"/>
+      <stop offset="0.54" stop-color="#0b0c0a"/>
+      <stop offset="1" stop-color="#071211"/>
+    </linearGradient>
+    <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse">
+      <path d="M52 0H0v52" fill="none" stroke="#fff8ed" stroke-opacity="0.055"/>
+    </pattern>
+  </defs>
+
+  <rect width="1270" height="760" fill="#070806"/>
+  <rect width="1270" height="760" fill="url(#grid)"/>
+  <circle cx="1170" cy="82" r="5" fill="#ef788b"/>
+  <circle cx="1044" cy="662" r="4" fill="#98d6c8"/>
+  <circle cx="82" cy="682" r="4" fill="#e7c174"/>
+  <path d="M1046 84l62 42 46-17 48 55" fill="none" stroke="#98d6c8" stroke-opacity=".14"/>
+  <path d="M72 617l71-33 55 51 62-27" fill="none" stroke="#e7c174" stroke-opacity=".13"/>
+
+  <g transform="translate(58 54)">
+    <rect width="46" height="46" rx="8" fill="#0d120f" stroke="#fff8ed" stroke-opacity=".18"/>
+    <path d="M10 13h21" stroke="#98d6c8" stroke-width="4" stroke-linecap="round"/>
+    <rect x="12" y="8" width="7" height="7" fill="#e7c174"/>
+    <text x="23" y="39" text-anchor="middle" fill="#dff6ee" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="820">S</text>
+    <text x="62" y="31" fill="#fff8ed" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="820">SignalWall</text>
+  </g>
+
+  <g transform="translate(58 166)">
+    <text fill="#98d6c8" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="820">TYPOGRAPHY-FIRST · WINDOWS · MULTI-MONITOR</text>
+    <text y="92" fill="#fff8ed" font-family="Inter, Arial, sans-serif" font-size="68" font-weight="820">Every screen can</text>
+    <text y="166" fill="url(#text)" font-family="Inter, Arial, sans-serif" font-size="68" font-weight="820">think differently.</text>
+    <text y="222" fill="#aaa59b" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="650">A living surface for quotes, ideas, and calm motion.</text>
+
+    <g transform="translate(0 272)" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="760">
+      <rect width="190" height="48" rx="5" fill="#111715" stroke="#98d6c8" stroke-opacity=".45"/>
+      <text x="95" y="30" text-anchor="middle" fill="#fff8ed">Per-screen logic</text>
+      <rect x="202" width="188" height="48" rx="5" fill="#111715" stroke="#e7c174" stroke-opacity=".45"/>
+      <text x="296" y="30" text-anchor="middle" fill="#fff8ed">Shareable presets</text>
+      <rect x="402" width="214" height="48" rx="5" fill="#111715" stroke="#ef788b" stroke-opacity=".4"/>
+      <text x="509" y="30" text-anchor="middle" fill="#fff8ed">Agent-verifiable</text>
+    </g>
+  </g>
+
+  <g transform="translate(730 144) scale(.75)">
+    <g transform="translate(74 0)">
+      <rect width="386" height="210" rx="8" fill="url(#panel)" stroke="#fff8ed" stroke-opacity=".22"/>
+      <text x="26" y="34" fill="#aaa59b" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800">SCREEN 03 · FOCUS</text>
+      <text x="26" y="92" fill="url(#text)" font-family="Inter, Arial, sans-serif" font-size="37" font-weight="820">Attention is</text>
+      <text x="26" y="136" fill="url(#text)" font-family="Inter, Arial, sans-serif" font-size="37" font-weight="820">the budget.</text>
+      <path d="M26 177h238" stroke="#fff8ed" stroke-opacity=".18" stroke-width="3"/>
+      <path d="M26 177h94" stroke="#98d6c8" stroke-width="3"/>
+    </g>
+    <g transform="translate(0 242)">
+      <rect width="338" height="188" rx="8" fill="url(#panel)" stroke="#fff8ed" stroke-opacity=".22"/>
+      <text x="24" y="33" fill="#aaa59b" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800">SCREEN 02 · DESIGN</text>
+      <text x="24" y="91" fill="url(#text)" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="820">Every pixel</text>
+      <text x="24" y="130" fill="url(#text)" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="820">earns its place.</text>
+      <path d="M24 158h220" stroke="#fff8ed" stroke-opacity=".18" stroke-width="3"/>
+      <path d="M24 158h64" stroke="#e7c174" stroke-width="3"/>
+    </g>
+    <g transform="translate(354 242)">
+      <rect width="338" height="188" rx="8" fill="url(#panel)" stroke="#fff8ed" stroke-opacity=".22"/>
+      <text x="24" y="33" fill="#aaa59b" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800">SCREEN 01 · SYSTEMS</text>
+      <text x="24" y="91" fill="url(#text)" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="820">Clarity is a</text>
+      <text x="24" y="130" fill="url(#text)" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="820">design decision.</text>
+      <path d="M24 158h220" stroke="#fff8ed" stroke-opacity=".18" stroke-width="3"/>
+      <path d="M24 158h136" stroke="#ef788b" stroke-width="3"/>
+    </g>
+  </g>
+
+  <text x="58" y="706" fill="#7f7c74" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="760">FREE · OPEN SOURCE · NO TELEMETRY · VERIFIED RELEASE EVIDENCE</text>
+</svg>

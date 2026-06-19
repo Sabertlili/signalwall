@@ -33,4 +33,4 @@ Include:
 - The app should not disable Windows security features.
 - Any future network behavior, auto-update behavior, or startup persistence must be documented before release.
 
-See [AI-assisted source installation](docs/ai-assisted-install.en.md) for a guided verification prompt.
+See [agent-verifiable source installation](docs/ai-assisted-install.en.md) for a guided audit and build prompt.

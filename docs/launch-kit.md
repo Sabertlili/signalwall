@@ -2,29 +2,29 @@
 
 Use this page when sharing SignalWall on Product Hunt, Hacker News, Reddit, LinkedIn, or X.
 
-## One-liner
+## Category
 
-SignalWall is a free, open-source Windows live wallpaper app for calm, intentional multi-monitor desktops.
+Typography-first live wallpapers for Windows.
 
 ## Short description
 
-SignalWall turns a Windows desktop into a quiet, customizable quote wallpaper system. It is open source, multi-monitor aware, and designed around a source-first install path so users can inspect the code before running it.
+SignalWall turns every Windows monitor into a living typography surface. Give each screen its own quotes, themes, timing, and motion, then export the complete setup as a shareable preset.
 
 ## Longer story
 
-Most live wallpapers are built to impress for five seconds. SignalWall is built for the screen you stare at all day. It keeps motion subtle, makes quotes easy to personalize, and treats multi-monitor setups as a first-class workflow.
+Most live wallpapers are image-first or video-first. SignalWall is typography-first. It treats words as the visual medium, makes multi-monitor logic a first-class workflow, and keeps motion quiet enough to live with all day.
 
-The project is also intentionally transparent. The current alpha installer is unsigned, so the recommended path is to use Codex, Claude Code, or another local coding agent to inspect the repository, build locally, and report security findings before launch.
+The project is also intentionally transparent. Its agent-verifiable install path lets Codex, Claude Code, or another local coding agent inspect the repository, build locally, and report security findings before launch. Releases also include checksums, an SPDX SBOM, a manifest, and signed build provenance.
 
 ## Launch post
 
-I built SignalWall because my desktop was becoming visual noise.
+I built SignalWall around a simple idea: the desktop should carry thought, not noise.
 
-It is a small open-source Windows live wallpaper app for multi-monitor setups. The first bundled wallpaper, Quote Signal, shows calm typography, subtle motion, quote themes, color themes, per-screen behavior, and one control surface.
+Most wallpaper engines are image-first or video-first. SignalWall is typography-first: every Windows monitor becomes a living surface for quotes and ideas. Run one thought across every display or give each screen its own quote pack, text theme, color theme, timing, and transition.
 
-The alpha installer is unsigned, so the project is source-first: the recommended install path asks Codex, Claude Code, or another local agent to inspect the repo, build locally, and explain security findings before anything runs.
+Complete setups can be exported as shareable presets. The project is free, MIT licensed, telemetry-free, and agent-verifiable: Codex or Claude Code can inspect the public repository, build locally, and explain security findings before anything runs.
 
-I would love feedback on the multi-monitor workflow, quote/theme system, and source-first install path.
+I would love feedback on this typography-first category, the per-screen workflow, and the agent-verifiable distribution model.
 
 ## Share assets
 
@@ -35,4 +35,4 @@ I would love feedback on the multi-monitor workflow, quote/theme system, and sou
 
 ## Suggested tags
 
-`windows`, `open-source`, `live-wallpaper`, `multi-monitor`, `productivity`, `desktop-app`, `webview2`, `dotnet`
+`windows`, `open-source`, `typography`, `live-wallpaper`, `multi-monitor`, `productivity`, `desktop-app`, `webview2`, `dotnet`

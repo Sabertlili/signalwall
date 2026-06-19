@@ -4,7 +4,7 @@ SignalWall is an early open-source project. Support is best effort.
 
 ## Before opening an issue
 
-1. Read the [AI-assisted source install prompt](docs/ai-assisted-install.en.md).
+1. Read the [agent-verifiable source install prompt](docs/ai-assisted-install.en.md).
 2. Confirm your Windows version.
 3. Confirm whether you ran from source or used a release binary.
 4. Run:
