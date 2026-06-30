@@ -145,12 +145,12 @@ jobs:
           $manifest | ConvertTo-Json -Depth 6 | Set-Content -Encoding utf8 ./dist/release-manifest.json
 
       - name: Attest release provenance
-        uses: actions/attest@v4.1.0
+        uses: actions/attest@v4.1.1
         with:
           subject-checksums: ./dist/SHA256SUMS.txt
 
       - name: Attest portable-package SBOM
-        uses: actions/attest@v4.1.0
+        uses: actions/attest@v4.1.1
         with:
           subject-path: ./dist/SignalWallPortable-v${{ steps.version.outputs.version }}-win-x64.zip
           sbom-path: ./dist/SignalWall-v${{ steps.version.outputs.version }}.spdx.json
