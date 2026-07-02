@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 
@@ -6,9 +8,9 @@ namespace SignalWall;
 public sealed class WallpaperForm : Form
 {
     private readonly Screen screen;
-    private readonly int screenSlot;
     private readonly string webRoot;
     private readonly WebView2 webView;
+    private int screenSlot;
 
     public WallpaperForm(Screen screen, int screenSlot, string webRoot)
     {
@@ -31,6 +33,8 @@ public sealed class WallpaperForm : Form
         Controls.Add(webView);
     }
 
+    public Rectangle ScreenBounds => screen.Bounds;
+
     protected override async void OnShown(EventArgs e)
     {
         base.OnShown(e);
@@ -40,6 +44,19 @@ public sealed class WallpaperForm : Form
     public void Reload()
     {
         Navigate();
+    }
+
+    public void ApplyConfiguration(int newScreenSlot, JsonNode config)
+    {
+        screenSlot = newScreenSlot;
+        if (webView.CoreWebView2 is null)
+        {
+            return;
+        }
+
+        var json = config.ToJsonString();
+        var script = $"window.signalWallApplyConfig?.(JSON.parse({JsonSerializer.Serialize(json)}), {screenSlot});";
+        _ = webView.CoreWebView2.ExecuteScriptAsync(script);
     }
 
     private async Task InitializeWebViewAsync()

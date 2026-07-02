@@ -10,12 +10,14 @@ public sealed class ControlCenterForm : Form
     private readonly string webRoot;
     private readonly ConfigStore configStore;
     private readonly Action applyConfiguration;
+    private readonly Action reloadWallpapers;
     private readonly WebView2 webView;
 
-    public ControlCenterForm(string webRoot, Action applyConfiguration)
+    public ControlCenterForm(string webRoot, Action applyConfiguration, Action reloadWallpapers)
     {
         this.webRoot = webRoot;
         this.applyConfiguration = applyConfiguration;
+        this.reloadWallpapers = reloadWallpapers;
         configStore = new ConfigStore(webRoot);
 
         Text = "SignalWall Control Center";
@@ -87,7 +89,7 @@ public sealed class ControlCenterForm : Form
                     });
                     break;
                 case "reload":
-                    applyConfiguration();
+                    reloadWallpapers();
                     SendSuccess(requestId, new JsonObject
                     {
                         ["reloadedAt"] = DateTime.Now.ToString("HH:mm:ss")

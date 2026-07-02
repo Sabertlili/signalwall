@@ -47,11 +47,26 @@ const els = {
   palettePreview: $("palettePreview"),
   previewKicker: $("previewKicker"),
   previewQuote: $("previewQuote"),
-  previewAuthor: $("previewAuthor")
+  previewAuthor: $("previewAuthor"),
+  modalLayer: $("modalLayer"),
+  modalKicker: $("modalKicker"),
+  modalTitle: $("modalTitle"),
+  modalMessage: $("modalMessage"),
+  modalInputRow: $("modalInputRow"),
+  modalInputLabel: $("modalInputLabel"),
+  modalInput: $("modalInput"),
+  modalCloseBtn: $("modalCloseBtn"),
+  modalCancelBtn: $("modalCancelBtn"),
+  modalConfirmBtn: $("modalConfirmBtn")
+};
+
+const modal = {
+  resolve: null,
+  previousFocus: null
 };
 
 const settingFields = [
-  ["quoteSeconds", "s"],
+  ["quoteSeconds", ""],
   ["textScale", "%"],
   ["particleAmount", ""],
   ["particleSpeed", ""],
@@ -91,9 +106,81 @@ function clamp(value, fallback, min, max) {
   return Math.min(max, Math.max(min, number));
 }
 
+function normalizeQuoteSeconds(value, fallback = 300) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  if (number <= 0) return 0;
+  return Math.min(3600, Math.max(5, Math.round(number)));
+}
+
+function formatDuration(seconds) {
+  const value = normalizeQuoteSeconds(seconds);
+  if (value <= 0) return "Freeze";
+  if (value < 60) return `${value}s`;
+  if (value % 3600 === 0) return `${value / 3600}h`;
+  if (value % 60 === 0) return `${value / 60}m`;
+  const minutes = Math.floor(value / 60);
+  const remainder = value % 60;
+  return `${minutes}m ${remainder}s`;
+}
+
 function normalizeTransitionEffect(value) {
+  const index = Number(value);
+  if (Number.isInteger(index) && index >= 0 && index < transitionEffects.length) {
+    return transitionEffects[index];
+  }
   const effect = String(value || "fade").trim();
   return transitionEffects.includes(effect) ? effect : "fade";
+}
+
+function closeModal(result) {
+  if (!modal.resolve) return;
+  const resolve = modal.resolve;
+  modal.resolve = null;
+  els.modalLayer.hidden = true;
+  els.modalInput.value = "";
+  if (modal.previousFocus?.focus) modal.previousFocus.focus();
+  modal.previousFocus = null;
+  resolve(result);
+}
+
+function openModal(options = {}) {
+  return new Promise((resolve) => {
+    modal.resolve = resolve;
+    modal.previousFocus = document.activeElement;
+    els.modalKicker.textContent = options.kicker || "SignalWall";
+    els.modalTitle.textContent = options.title || "Confirm";
+    els.modalMessage.textContent = options.message || "";
+    els.modalCancelBtn.textContent = options.cancelText || "Cancel";
+    els.modalConfirmBtn.textContent = options.confirmText || "Confirm";
+    els.modalConfirmBtn.className = options.danger ? "danger" : "primary";
+
+    const needsInput = Boolean(options.inputLabel);
+    els.modalInputRow.hidden = !needsInput;
+    els.modalInputLabel.textContent = options.inputLabel || "";
+    els.modalInput.placeholder = options.placeholder || "";
+    els.modalInput.value = options.defaultValue || "";
+    els.modalLayer.hidden = false;
+
+    window.requestAnimationFrame(() => {
+      if (needsInput) {
+        els.modalInput.focus();
+        els.modalInput.select();
+      } else {
+        els.modalConfirmBtn.focus();
+      }
+    });
+  });
+}
+
+async function requestText(title, inputLabel, options = {}) {
+  const result = await openModal({ ...options, title, inputLabel, confirmText: options.confirmText || "Create" });
+  return result?.confirmed ? result.value.trim() : "";
+}
+
+async function requestConfirm(title, message, options = {}) {
+  const result = await openModal({ ...options, title, message });
+  return Boolean(result?.confirmed);
 }
 
 function safeId(label) {
@@ -254,7 +341,7 @@ function normalizeImportedConfig(candidate) {
     version: 1,
     defaults: {
       settings: {
-        quoteSeconds: clamp(sourceSettings.quoteSeconds, 30, 5, 300),
+        quoteSeconds: normalizeQuoteSeconds(sourceSettings.quoteSeconds, 300),
         textScale: clamp(sourceSettings.textScale, 100, 60, 160),
         particleAmount: clamp(sourceSettings.particleAmount, 65, 0, 120),
         particleSpeed: clamp(sourceSettings.particleSpeed, 100, 0, 200),
@@ -301,7 +388,7 @@ function defaults() {
 
 function settings() {
   const d = defaults();
-  d.settings.quoteSeconds = clamp(d.settings.quoteSeconds, 12, 5, 300);
+  d.settings.quoteSeconds = normalizeQuoteSeconds(d.settings.quoteSeconds, 300);
   d.settings.textScale = clamp(d.settings.textScale, 100, 60, 160);
   d.settings.particleAmount = clamp(d.settings.particleAmount, 65, 0, 120);
   d.settings.particleSpeed = clamp(d.settings.particleSpeed, 100, 0, 200);
@@ -365,14 +452,17 @@ function updateSummary() {
   const quote = d.quoteDisplayMode ? "different quotes" : "same quote";
   const text = d.textThemeMode ? "text per screen" : "one text theme";
   const color = d.colorThemeMode ? "colors per screen" : "one color theme";
-  els.setupSummary.textContent = `${s.quoteSeconds}s, ${quote}, ${text}, ${color}`;
+  els.setupSummary.textContent = `${formatDuration(s.quoteSeconds)}, ${quote}, ${text}, ${color}`;
 }
 
 function renderSettings() {
   const s = settings();
   settingFields.forEach(([key, suffix]) => {
     els[key].value = s[key];
-    els[`${key}Value`].textContent = `${s[key]}${suffix}`;
+    els[`${key}Value`].textContent = key === "quoteSeconds" ? formatDuration(s[key]) : `${s[key]}${suffix}`;
+  });
+  document.querySelectorAll("[data-duration]").forEach((button) => {
+    button.classList.toggle("active", normalizeQuoteSeconds(button.dataset.duration) === s.quoteSeconds);
   });
   els.transitionEffect.value = s.transitionEffect;
   els.progressVisible.checked = s.progressVisible;
@@ -405,6 +495,7 @@ function readControlsToConfig() {
   settingFields.forEach(([key]) => {
     s[key] = Number(els[key].value);
   });
+  s.quoteSeconds = normalizeQuoteSeconds(els.quoteSeconds.value);
   s.transitionEffect = normalizeTransitionEffect(els.transitionEffect.value);
   s.progressVisible = els.progressVisible.checked;
   s.randomOrder = els.randomOrder.checked;
@@ -735,6 +826,15 @@ async function importPreset(file) {
 settingFields.forEach(([key]) => {
   els[key].addEventListener("input", handleChange);
 });
+document.querySelectorAll("[data-duration]").forEach((button) => {
+  button.addEventListener("click", () => {
+    settings().quoteSeconds = normalizeQuoteSeconds(button.dataset.duration);
+    markDirty();
+    renderSettings();
+    renderScreens();
+    updateSummary();
+  });
+});
 els.progressVisible.addEventListener("change", handleChange);
 els.randomOrder.addEventListener("change", handleChange);
 els.transitionEffect.addEventListener("change", handleChange);
@@ -758,6 +858,21 @@ els.presetFileInput.addEventListener("change", async () => {
   } finally {
     els.presetFileInput.value = "";
   }
+});
+
+els.modalCloseBtn.addEventListener("click", () => closeModal({ confirmed: false, value: "" }));
+els.modalCancelBtn.addEventListener("click", () => closeModal({ confirmed: false, value: "" }));
+els.modalConfirmBtn.addEventListener("click", () => {
+  closeModal({ confirmed: true, value: els.modalInput.value });
+});
+els.modalLayer.addEventListener("click", (event) => {
+  if (event.target === els.modalLayer) closeModal({ confirmed: false, value: "" });
+});
+els.modalInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") closeModal({ confirmed: true, value: els.modalInput.value });
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !els.modalLayer.hidden) closeModal({ confirmed: false, value: "" });
 });
 
 els.textThemeSelect.addEventListener("change", () => {
@@ -785,8 +900,11 @@ els.colorThemeName.addEventListener("input", () => {
   renderScreens();
 });
 
-$("addTextThemeBtn").addEventListener("click", () => {
-  const label = prompt("Text theme name");
+$("addTextThemeBtn").addEventListener("click", async () => {
+  const label = await requestText("New text theme", "Theme name", {
+    message: "Create a phrase theme for a workflow, mood, screen, or project.",
+    placeholder: "Example: Deep work"
+  });
   if (!label) return;
   app.config.textThemes.push({
     id: uniqueId(label, app.config.textThemes),
@@ -798,9 +916,15 @@ $("addTextThemeBtn").addEventListener("click", () => {
   renderAll();
 });
 
-$("deleteTextThemeBtn").addEventListener("click", () => {
+$("deleteTextThemeBtn").addEventListener("click", async () => {
   if (app.config.textThemes.length <= 1) return showNotice("Keep at least one text theme.", "error");
-  if (!confirm("Delete this text theme?")) return;
+  const theme = app.config.textThemes[app.activeTextTheme];
+  const confirmed = await requestConfirm(
+    "Delete text theme",
+    `Delete "${theme?.label || "this theme"}" and its phrases from the control center?`,
+    { confirmText: "Delete", danger: true }
+  );
+  if (!confirmed) return;
   app.config.textThemes.splice(app.activeTextTheme, 1);
   app.activeTextTheme = Math.max(0, app.activeTextTheme - 1);
   markDirty();
@@ -824,8 +948,11 @@ $("addQuoteBtn").addEventListener("click", () => {
   showNotice(`${lines.length} quote${lines.length > 1 ? "s" : ""} added.`);
 });
 
-$("addColorThemeBtn").addEventListener("click", () => {
-  const label = prompt("Color theme name");
+$("addColorThemeBtn").addEventListener("click", async () => {
+  const label = await requestText("New color theme", "Theme name", {
+    message: "Duplicate the current palette and give the new version a name.",
+    placeholder: "Example: Paper focus"
+  });
   if (!label) return;
   const source = JSON.parse(JSON.stringify(app.config.colorThemes[app.activeColorTheme] || app.config.colorThemes[0]));
   source.id = uniqueId(label, app.config.colorThemes);
@@ -836,9 +963,15 @@ $("addColorThemeBtn").addEventListener("click", () => {
   renderAll();
 });
 
-$("deleteColorThemeBtn").addEventListener("click", () => {
+$("deleteColorThemeBtn").addEventListener("click", async () => {
   if (app.config.colorThemes.length <= 1) return showNotice("Keep at least one color theme.", "error");
-  if (!confirm("Delete this color theme?")) return;
+  const theme = app.config.colorThemes[app.activeColorTheme];
+  const confirmed = await requestConfirm(
+    "Delete color theme",
+    `Delete "${theme?.label || "this palette"}" from the control center?`,
+    { confirmText: "Delete", danger: true }
+  );
+  if (!confirmed) return;
   app.config.colorThemes.splice(app.activeColorTheme, 1);
   app.activeColorTheme = Math.max(0, app.activeColorTheme - 1);
   markDirty();
