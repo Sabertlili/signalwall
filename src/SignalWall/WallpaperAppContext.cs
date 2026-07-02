@@ -71,7 +71,7 @@ public sealed class WallpaperAppContext : ApplicationContext
     {
         if (controlCenter is null || controlCenter.IsDisposed)
         {
-            controlCenter = new ControlCenterForm(WebRoot, StartWallpapers);
+            controlCenter = new ControlCenterForm(WebRoot, ApplyConfiguration, ReloadWallpapers);
         }
 
         if (!controlCenter.Visible)
@@ -86,6 +86,22 @@ public sealed class WallpaperAppContext : ApplicationContext
 
         controlCenter.BringToFront();
         controlCenter.Activate();
+    }
+
+    private void ApplyConfiguration()
+    {
+        var configStore = new ConfigStore(WebRoot);
+        var config = configStore.Read();
+        var screenOrder = configStore.ReadScreenOrder();
+
+        for (var position = 0; position < forms.Count; position += 1)
+        {
+            var form = forms[position];
+            var slot = position < screenOrder.Count
+                ? screenOrder[position]
+                : ScreenSlotResolver.Resolve(form.ScreenBounds);
+            form.ApplyConfiguration(slot, config);
+        }
     }
 
     private static void OpenWebFolder()

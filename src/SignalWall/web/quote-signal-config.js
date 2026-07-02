@@ -2,7 +2,7 @@ window.QUOTE_SIGNAL_CONFIG = {
   "version": 1,
   "defaults": {
     "settings": {
-      "quoteSeconds": 30,
+      "quoteSeconds": 300,
       "textScale": 100,
       "particleAmount": 65,
       "particleSpeed": 100,
